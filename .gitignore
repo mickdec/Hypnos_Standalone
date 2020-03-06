@@ -1,0 +1,4 @@
+/SRC/__pycache__
+*.exe
+*.o
+*.c
