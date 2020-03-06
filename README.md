@@ -5,7 +5,7 @@
 About
 -----
 
-A multi-library tool, innitially developed for binary exploitation.
+A multi-library tool, initially developed for binary exploitation.
 Initally developped for a school project, it get a little bit more of extent.
 
 Prerequisites
