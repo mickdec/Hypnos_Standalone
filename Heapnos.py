@@ -59,8 +59,8 @@ def menu():
     shellcodes = []
     for (dirpath, dirnames, filenames) in os.walk("ASM/ShellCodes"):
         for file in filenames:
-            shellcodes.append((dirpath+"/"+file).replace("\\",
-                                                         "/").replace("ASM/ShellCodes/", "").split(".")[0])
+            if "dev" not in dirpath.split("\\"):
+                shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
 
     case = []
     for i in range(0, len(shellcodes)):
