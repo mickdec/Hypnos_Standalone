@@ -1,8 +1,11 @@
 '''
 Library made for all the debuging purpose.
+-class ENV
 -class COLORS
 -string RevertString(content:str)
 -void Log(status: "WORK:SUCCESS:ERROR", info: str)
+-void CheckPreReq()
+-string CheckEnv()
 -int CheckArgs(argv: list)
 -void CheckFile(input_file: str)
 -string StringToHex(content: str)
@@ -16,9 +19,15 @@ from SRC import LibByteEditor
 from colorama import init, Fore
 import sys
 import os
+import platform
 import subprocess
 init()
 
+class ENV:
+      def __init__(self):
+            self.PROC = platform.processor()[:7]
+            self.SYSTEM = platform.uname().system
+            self.ARCH = platform.uname().machine
 
 class COLORS:
       def __init__(self):
@@ -65,14 +74,11 @@ def CheckEnv():
     -return: void
     '''
     try:
-      # 'aix'
-      # 'linux'
-      # 'win32'
-      # 'cygwin'
-      # 'darwin'
-      return sys.platform
+      env = ENV()
+      return env
     except:
-        exit()
+      Log("ERROR", "Error while trying to get system informations.")
+      exit()
 
 
 def CheckArgs(argv: list):

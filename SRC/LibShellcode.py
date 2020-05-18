@@ -13,13 +13,13 @@ import binascii
 import os
 import re
 
+Env = LibDebug.ENV()
 
 class SHELLCODE:
         '''
         SHELLCODE Class.
         -string GetShellcode()
         '''
-
         def __init__(self):
             self.opcodes = []
 
@@ -39,8 +39,12 @@ def ReadSHELLCODE(inputFile: str):
     Read one ASM file and return a SHELLCODE object
     -return SHELLCODE
     '''
-    os.system("nasm -f elf " + inputFile +
-              " -o shellcode.o & ld -o shellcode shellcode.o & objdump -d shellcode > shellcode.sc")
+    if Env.PROC == "Intel64":
+        os.system("nasm -f elf " + inputFile +
+                " -o shellcode.o & ld -m elf_i386 -o shellcode shellcode.o & objdump -d shellcode > shellcode.sc")
+    else:
+        os.system("nasm -f elf " + inputFile +
+                " -o shellcode.o & ld -o shellcode shellcode.o & objdump -d shellcode > shellcode.sc")
     unparsed_shellcode = ""
     shellcode = SHELLCODE()
     with open("shellcode.sc", 'r') as fc:

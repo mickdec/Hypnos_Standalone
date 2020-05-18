@@ -1,5 +1,6 @@
 import os
 import sys
+import platform
 from SRC import LibDebug
 from SRC import LibObfuscator
 from SRC import LibByteEditor
@@ -8,12 +9,12 @@ from SRC import LibShellcode
 from SRC import LibPeEditor
 
 Color = LibDebug.COLORS()
-
+Env = LibDebug.ENV()
 
 def menu():
     LibDebug.Log(
         "WORK", "This program use NASM, and ld. Please check that there are installed before using it.")
-    if LibDebug.CheckEnv() != "win32":
+    if Env.SYSTEM != "Windows":
         LibDebug.Log("ERROR", "Only working on windows at the moment..")
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
