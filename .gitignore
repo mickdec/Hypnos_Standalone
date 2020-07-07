@@ -1,4 +1,6 @@
 /SRC/__pycache__
+/SRC/Libs/__pycache__
+/SRC/Core/__pycache__
 *.exe
 *.o
 *.c
