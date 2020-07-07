@@ -1,3 +1,8 @@
+section .text
+
+global main
+
+main:
 xor ecx,ecx
 mov ecx, 0xffffffff ;Anti NullByte
 sub ecx, 0xffffffcf

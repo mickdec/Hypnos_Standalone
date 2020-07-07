@@ -364,7 +364,7 @@ mov ebx, [ebp-0ch]     ; Address for CreateProcessA
 call ebx                ; create process cmd 
 
 comp:
-; xor eax,eax //Boucle infinie, pour l'utiliser avec HEAPNOS on la commente, pour débug on la décommente
+; xor eax,eax //Boucle infinie, pour l'utiliser avec Andros on la commente, pour débug on la décommente
 ; mov eax, 0x1
 ; cmp eax,0x0
 ; jne comp

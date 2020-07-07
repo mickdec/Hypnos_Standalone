@@ -14,8 +14,9 @@ Library made for all the debuging purpose.
 -string AdaptStringToHex(content: str, size: int)
 -void ComparePe(Pe1: LibPeAnnalyzer.PE, Pe2: LibPeAnnalyzer.PE)
 '''
-from SRC import LibPeAnnalyzer
-from SRC import LibByteEditor
+from SRC.Libs import LibDebug
+from SRC.Libs import LibPeAnnalyzer
+from SRC.Libs import LibByteEditor
 from colorama import init, Fore
 import sys
 import os
@@ -25,7 +26,6 @@ init()
 
 class ENV:
       def __init__(self):
-            self.PROC = platform.processor()[:7]
             self.SYSTEM = platform.uname().system
             self.ARCH = platform.uname().machine
 
@@ -65,7 +65,6 @@ def Log(status: "INFO:WORK:SUCCESS:ERROR", info: str):
         print("[" + Colors.RED + "X" + Colors.RESET + "] " + info)
     elif status == "INFO":
         print("[" + Colors.BLUE + "i" + Colors.RESET + "] " + info)
-        MOD_CARETCOLOR = Colors.BLUE
 
 
 def CheckEnv():
@@ -79,6 +78,61 @@ def CheckEnv():
     except:
       Log("ERROR", "Error while trying to get system informations.")
       exit()
+
+def CheckHephaistosReq():
+      '''
+      Check the prerequistes for using Hephaistos.
+      -return: void
+      '''
+      error = False
+      if error:
+            sys.exit(0)
+
+def CheckHypnosReq():
+      '''
+      Check the prerequistes for using Hypnos CoreModule.
+      -return: void
+      '''
+      error = False
+      try:
+            process = subprocess.Popen(['gcc'])
+            process.terminate()
+            LibDebug.Log("SUCCESS", "GCC ok.")
+      except:
+            LibDebug.Log("ERROR", "gcc is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.cygwin.com/")
+            error = True
+      try:
+            process = subprocess.Popen(['python3'])
+            process.terminate()
+            LibDebug.Log("SUCCESS", "Python ok.")
+      except:
+            LibDebug.Log("ERROR", "Python3 can't be invoqued with 'python3' please considering reinstalling Python3. Hypnos need it.")
+            error = True
+      try:
+            process = subprocess.Popen(['nasm'])
+            process.terminate()
+            LibDebug.Log("SUCCESS", "NASM ok.")
+      except:
+            LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
+            error = True
+      if error:
+            sys.exit(0)
+
+def CheckJanusReq():
+      '''
+      Check the prerequistes for using Janus CoreModule.
+      -return: void
+      '''
+      error = False
+      try:
+            process = subprocess.Popen(['nmap'])
+            process.terminate()
+            LibDebug.Log("SUCCESS", "NMAP ok.")
+      except:
+            LibDebug.Log("ERROR", "NMAP is not FOUND on your system. Janus need it. https://nmap.org/")
+            error = True
+      if error:
+            sys.exit(0)
 
 
 def CheckArgs(argv: list):

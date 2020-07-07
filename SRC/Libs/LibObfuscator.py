@@ -9,7 +9,7 @@ Library made for working one generated and obfuscated C source code.
 -string GenerateObfuscated(obfuscated: OBFUSCATED, outputfile: str)
 -string Compile(source: str)
 '''
-from SRC import LibShellcode
+from SRC.Libs import LibShellcode
 import random
 import re
 import os
@@ -46,7 +46,7 @@ def RandomizedDictionnary(dictionnary: str):
     -return: string
     '''
     used_child = ""
-    for child in dictionnary:
+    for _ in dictionnary:
         child_content = dictionnary[random.randint(0, len(dictionnary)-1)]
         while len(used_child) < len(dictionnary):
             if child_content in used_child:
@@ -72,7 +72,7 @@ def GenerateC(complexity: int):
     namesize = 5
     nameTMP = ""
     trigg = 0
-    for i in range(0, number_of_functions):
+    for _ in range(0, number_of_functions):
         function = FUNCTION()
         nameTMP = RandomizedString(namesize)
         if len(Source_code.functions) == 0:
@@ -89,7 +89,7 @@ def GenerateC(complexity: int):
             function.name = "void " + nameTMP + "(){\n"
         function.content = ""
         Source_code.functions.append(function)
-        for i in range(0, number_of_functions):
+        for _ in range(0, number_of_functions):
             splited = Source_code.functions[random.randint(
                 0, len(Source_code.functions)-1)].name.split(' ')[1]
             splitedBase = Source_code.functions[a].name.split(' ')[1]
@@ -97,7 +97,7 @@ def GenerateC(complexity: int):
                 Source_code.functions[a].content += splited.split('(')[
                     0] + "();\n"
         a += 1
-    for i in range(0, number_of_functions):
+    for _ in range(0, number_of_functions):
         splited = Source_code.functions[random.randint(
             1, number_of_functions-1)].name.split(' ')[1]
         main_function.content += splited.split('(')[0] + "();\n"
@@ -134,7 +134,6 @@ def ObfuscateC(inputFile: str, complexity):
         function.content = functionsContent[i]
         Source_code_annalyzed.functions.append(function)
     for function in Source_code_annalyzed.functions:
-        Obfuscated_function = FUNCTION()
         splited = ""
         splited = function.name.split(' ')
         if "main(" not in splited[1]:

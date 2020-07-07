@@ -9,8 +9,8 @@ Library made for editing bytes/HEX content, and creating files.
 -void CreateExeFromPE(output: str, Pe: LibPeAnnalyzer.PE)
 -string AlignData(size: int, alignment, address: str)
 '''
-from SRC import LibDebug
-from SRC import LibPeAnnalyzer
+from SRC.Libs import LibDebug
+from SRC.Libs import LibPeAnnalyzer
 from ctypes import c_int32
 
 
@@ -26,12 +26,13 @@ def RevertBytes(content: str):
     return contentTMP
 
 
-def GetHexFromFile(input_file: str):
+def GetHexFromFile(inputfile: str):
     '''
     Return the full Hex of a file.
     -return: string
     '''
-    with open(input_file, mode='rb') as f:
+    LibDebug.CheckFile(inputfile)
+    with open(inputfile, mode='rb') as f:
         return f.read().hex()
 
 

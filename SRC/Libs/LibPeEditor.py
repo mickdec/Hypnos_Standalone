@@ -4,9 +4,10 @@ Library made for editing the values of a PE class.
 -void AddSection(Pe, sectionname: str, shellcode: str)
 -void ModifyEntryPoint(Pe, entrypoint:str)
 '''
-from SRC import LibDebug
-from SRC import LibPeAnnalyzer
-from SRC import LibByteEditor
+from SRC.Core import Globals
+from SRC.Libs import LibDebug
+from SRC.Libs import LibPeAnnalyzer
+from SRC.Libs import LibByteEditor
 import time
 from datetime import datetime
 
@@ -61,19 +62,20 @@ def AddSection(Pe, sectionname: str, rawdata: str):
     NewSection.pointertolinenumbers = "00000000"
     NewSection.numberofrelocations = "0000"
     NewSection.numberoflinenumbers = "0000"
-    NewSection.characteristics = "c0000000"
+
+    if Globals.Env.ARCH == "AMD64":
+        NewSection.characteristics = "60000000"
+    else:
+        NewSection.characteristics = "c0000000"
+
     Pe.SectionTable.sections.append(NewSection)
     Pe.Optionalpeheader.sizeofimage = LibDebug.AdaptStringToHex(str(hex(int(Pe.Optionalpeheader.sizeofimage, 16)+int(
         Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].virtualsize, 16))[2:]), Pe.Optionalpeheader.sizeof_sizeofimage)
-
     for _ in range(len(rawdata)*2):
         rawdata += "00"
-
     NewHex = str(Pe.ToHex()[:int(
         2*int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].pointertorawdata, 16))])
-
     NewHex += str("0"*len(NewSection.ToHex())) + rawdata
-
     NewHex += str(Pe.ToHex()[int(2*int(int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].pointertorawdata,
                                            16)+int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].sizeofrawdata, 16))):])
     Pe.Dummy.dum01 = NewHex[Pe.Dummy.dummyindex+(len(NewSection.ToHex())*2):]

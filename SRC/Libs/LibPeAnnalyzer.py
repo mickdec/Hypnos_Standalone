@@ -36,8 +36,8 @@ Library made for analyzing EXE file.
 -int ExtractSectionsTable(content: str, Pe: PE, index: int)
 -int ExtractDummy(content: str, Pe: PE, index: int)
 '''
-from SRC import LibDebug
-from SRC import LibByteEditor
+from SRC.Libs import LibDebug
+from SRC.Libs import LibByteEditor
 from datetime import datetime
 BYTE = 2
 
@@ -255,7 +255,7 @@ class OPTIONALPEHEADER:
             self.sizeof_numberofrvaandsizes = 4*BYTE
             self.sizeof_OPTIONALPEHEADER = self.sizeof_signature +self.sizeof_majorlinkerversion +self.sizeof_minorlinkerversion +self.sizeof_sizeofcode +self.sizeof_sizeofinitializeddata +self.sizeof_sizeofuninitializeddata +self.sizeof_addressofentrypoint +self.sizeof_baseofcode +self.x32_sizeof_baseofdata +self.x32_sizeof_imagebase +self.sizeof_sectionalignment +self.sizeof_filealignment +self.sizeof_majorosversion +self.sizeof_minorosversion +self.sizeof_majorimageversion +self.sizeof_minorimageversion +self.sizeof_majorsubsystemversion +self.sizeof_minorsubsystemversion +self.sizeof_win32versionvalue +self.sizeof_sizeofimage +self.sizeof_sizeofheaders +self.sizeof_checksum +self.sizeof_subsystem +self.sizeof_dllcharacteristics +self.x32_sizeof_sizeofstackreserve +self.x32_sizeof_sizeofstackcommit +self.x32_sizeof_sizeofheapreserve +self.x32_sizeof_sizeofheapcommit +self.sizeof_loaderflags +self.sizeof_numberofrvaandsizes
             if self.numberofrvaandsizes:
-                  for i in range(int(self.numberofrvaandsizes,16)):
+                  for _ in range(int(self.numberofrvaandsizes,16)):
                         self.sizeof_OPTIONALPEHEADER += 8*BYTE
 
       def ToHex(self):
