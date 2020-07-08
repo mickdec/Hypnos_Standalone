@@ -13,14 +13,10 @@ Prerequisites
 
 [Python3](https://www.python.org/)
 
-[nasm](https://www.nasm.us/)
-
 gcc ([Cygwin for Windows](https://cygwin.com/install.html))
 
 Installation
 -----------------
->Install nasm
-
 >Install gcc
 
 ```Shell
@@ -29,15 +25,6 @@ git clone https://github.com/mickdec/andros
 
 **How it works**
 
-
-
 Exploiting WinPE32/64
 ----------------------
 Initially and currently being developed by **@mickdec**
-
-Exploiting Elf
-----------------------
-Currently being developed by  **@Migoliatte** and  **@Hephaides**
-
-Feedback & Support
---------
