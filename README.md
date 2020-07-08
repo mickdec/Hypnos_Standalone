@@ -23,7 +23,7 @@ Installation
 
 >Clone the repo
 ```Shell
-git clone https://github.com/mickdec/Hephaistos
+git clone https://github.com/mickdec/Hypnos
 ```
 
 >Install python dependencies (only colorama ATM)
@@ -34,3 +34,7 @@ python3 -m pip install -r requirements.txt
 Exploiting WinPE32/64
 ----------------------
 Initially and currently being developed by **@mickdec**
+
+Exploiting ELF
+----------------------
+Initially and currently being developed by **@Hephaisdes** and **@Migoliatte**
