@@ -19,9 +19,15 @@ Installation
 -----------------
 >Install gcc
 
+>Install python3
+
+>Clone the repo
 ```Shell
-git clone https://github.com/mickdec/andros
+git clone https://github.com/mickdec/Hephaistos
 ```
+
+>Install python dependencies (only colorama ATM)
+python3 -m pip install -r requirements.txt
 
 **How it works**
 
