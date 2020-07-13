@@ -1,3 +1,8 @@
+section .text
+        global _start
+
+_start:
+
 socket:                             
    push byte 41                    ;      # Push/pop will set syscall num
    pop rax                         ;
