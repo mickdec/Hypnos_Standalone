@@ -10,17 +10,31 @@ from SRC.Libs import LibPeAnnalyzer
 from SRC.Libs import LibElfAnnalyzer
 from SRC.Libs import LibShellcode
 from SRC.Libs import LibPeEditor
+from SRC.Libs import LibElfEditor
 
 Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
     inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
+    outputfile = "ELFx64_EDITED_printf.out"
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
     ElfInput.PrintELF()
-    exit()
 
+    shellcode = "0000000000000000000000000000000000000000000000000000000000000000"
+
+    LibDebug.Log("WORK", "Generating new section..")
+    LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
+
+    LibDebug.Log("WORK", "Calculating new EntryPoint..")
+    LibElfEditor.ModifyEntryPoint(ElfInput, "")
+
+    LibDebug.Log("WORK", "Generating edited executable..")
+    LibByteEditor.CreateExeFromPe(outputfile, PeInput)
+
+
+    exit()
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
 
