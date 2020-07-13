@@ -92,13 +92,13 @@ def CheckHypnosReq():
       except:
             LibDebug.Log("ERROR", "Python3 can't be invoqued with 'python3' please considering reinstalling Python3. Hypnos need it.")
             error = True
-      try:
-            process = subprocess.Popen(['nasm'])
-            process.terminate()
-            LibDebug.Log("SUCCESS", "NASM ok.")
-      except:
-            LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
-            error = True
+      # try:
+      #       process = subprocess.Popen(['nasm'])
+      #       process.terminate()
+      #       LibDebug.Log("SUCCESS", "NASM ok.")
+      # except:
+      #       LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
+      #       error = True
       if error:
             sys.exit(0)
 
