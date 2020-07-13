@@ -31,7 +31,7 @@ def menu():
     LibElfEditor.ModifyEntryPoint(ElfInput, "")
 
     LibDebug.Log("WORK", "Generating edited executable..")
-    LibByteEditor.CreateExeFromPe(outputfile, PeInput)
+    LibByteEditor.CreateExeFromPe(outputfile, ElfInput)
 
 
     exit()
