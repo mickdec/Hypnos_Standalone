@@ -7,6 +7,7 @@ from SRC.Libs import LibDebug
 from SRC.Libs import LibObfuscator
 from SRC.Libs import LibByteEditor
 from SRC.Libs import LibPeAnnalyzer
+from SRC.Libs import LibElfAnnalyzer
 from SRC.Libs import LibShellcode
 from SRC.Libs import LibPeEditor
 
@@ -14,6 +15,14 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
+    inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
+    HexContent = LibByteEditor.GetHexFromFile(inputfile)
+    ElfInput = LibElfAnnalyzer.Extract(HexContent)
+    ElfInput.PrintELF()
+
+    exit()
+
+
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
 
     print(
