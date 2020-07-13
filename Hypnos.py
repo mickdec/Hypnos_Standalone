@@ -19,7 +19,6 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
     ElfInput.PrintELF()
-
     exit()
 
 
