@@ -139,6 +139,66 @@ class PROGRAMHEADERTABLE:
                   content += self.headertable[i].ToHex()
             return content
 
+class SECTIONHEADER:
+      def __init__(self):
+            self.name = ""
+            self.type = ""
+            self.flags = ""
+            self.addr = ""
+            self.offset = ""
+            self.size = ""
+            self.link = ""
+            self.info = ""
+            self.addralign = ""
+            self.entsize = ""
+            self.sizeof_name = 4*BYTE
+            self.sizeof_type = 4*BYTE
+            self.x32_sizeof_flags = 4*BYTE
+            self.x64_sizeof_flags = 8*BYTE
+            self.x32_sizeof_addr = 4*BYTE
+            self.x64_sizeof_addr = 8*BYTE
+            self.x32_sizeof_offset = 4*BYTE
+            self.x64_sizeof_offset = 8*BYTE
+            self.x32_sizeof_size = 4*BYTE
+            self.x64_sizeof_size = 8*BYTE
+            self.sizeof_link = 4*BYTE
+            self.sizeof_info = 4*BYTE
+            self.x32_sizeof_addralign = 4*BYTE
+            self.x64_sizeof_addralign = 8*BYTE
+            self.x32_sizeof_entsize = 4*BYTE
+            self.x64_sizeof_entsize = 8*BYTE
+      def ToHex(self):
+            '''
+            Return the section into a HEX string.
+            -return: string
+            '''
+            content = ""
+            content += LibByteEditor.RevertBytes(self.name)
+            content += LibByteEditor.RevertBytes(self.type)
+            content += LibByteEditor.RevertBytes(self.flags)
+            content += LibByteEditor.RevertBytes(self.addr)
+            content += LibByteEditor.RevertBytes(self.offset)
+            content += LibByteEditor.RevertBytes(self.size)
+            content += LibByteEditor.RevertBytes(self.link)
+            content += LibByteEditor.RevertBytes(self.info)
+            content += LibByteEditor.RevertBytes(self.addralign)
+            content += LibByteEditor.RevertBytes(self.entsize)
+            return content
+
+class SECTIONHEADERTABLE:
+      def __init__(self):
+            self.sectiontable = []
+      
+      def ToHex(self):
+            '''
+            Return the section into a HEX string.
+            -return: string
+            '''
+            content = ""
+            for i in range(0, len(self.sectiontable)):
+                  content += self.sectiontable[i].ToHex()
+            return content
+
 class ELF:
       '''
       ELF Class.
@@ -149,6 +209,7 @@ class ELF:
       def __init__(self):
             self.Elfheader = ELFHEADER()
             self.Programheadertable = PROGRAMHEADERTABLE()
+            self.Sectionheadertable = SECTIONHEADERTABLE()
 
       def PrintELF(self):
             '''
@@ -157,6 +218,7 @@ class ELF:
             '''
             self.PrintElfHeader()
             self.PrintProgramHeaderTable()
+            self.PrintSectionHeaderTable()
 
       def PrintElfHeader(self):
             '''
@@ -199,6 +261,21 @@ class ELF:
                   print("     Memsz : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].memsz))
                   print("     Align : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].align))
 
+      def PrintSectionHeaderTable(self):
+            print("\nSECTIONHEADERTABLE :")
+            for i in range(0, int(LibByteEditor.RevertBytes(self.Elfheader.entrynumber_sectionheader), 16)):
+                  print("Section " + str(i) + " :")
+                  print("     Name : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].name))
+                  print("     Type : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].type))
+                  print("     Flags : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].flags))
+                  print("     Addr : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].addr))
+                  print("     Offset : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].offset))
+                  print("     Size : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].size))
+                  print("     Link : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].link))
+                  print("     Info : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].info))
+                  print("     AddrAlign : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].addralign))
+                  print("     EntSize : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].entsize))
+
       def ToHex(self):
             '''
             Return the ELF into a HEX string.
@@ -207,6 +284,7 @@ class ELF:
             content = ""
             content += self.Elfheader.ToHex()
             content += self.Programheadertable.ToHex()
+            content += self.Sectionheadertable.ToHex()
             return content
 
 
@@ -220,6 +298,9 @@ def Extract(content: str):
             index = 0
             index = ExtractELFHeader(content, Elf, index)
             index = ExtractProgramHeaderTable(content, Elf, index)
+
+            index = int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2
+            index = ExtractSectionHeaderTable(content, Elf, index)
             return Elf
       else:
             print("Your file isn't a valid ELF Executable, invalid magic number " + content[2:4] + content[0:2] + ".")
@@ -323,5 +404,54 @@ def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
                   index += Elf.Programheadertable.headertable[i].sizeof_flags
                   Elf.Programheadertable.headertable[i].align = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_align]
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_align
+      LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
+      return index
+
+def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
+      '''
+      Extract the SECTION header table from a content and add it to a LibElfAnnalyzer.ELF class.
+      -return: int
+      '''
+      LibDebug.Log("WORK", "Extracting SECTION Header Table.")
+      for i in range(0, int(LibByteEditor.RevertBytes(Elf.Elfheader.entrynumber_sectionheader), 16)):
+            Elf.Sectionheadertable.sectiontable.append(SECTIONHEADER())
+            Elf.Sectionheadertable.sectiontable[i].name = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_name]
+            index += Elf.Sectionheadertable.sectiontable[i].sizeof_name
+            Elf.Sectionheadertable.sectiontable[i].type = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_type]
+            index += Elf.Sectionheadertable.sectiontable[i].sizeof_type
+            if Elf.Elfheader.struct == "02":  # x64
+                  Elf.Sectionheadertable.sectiontable[i].flags = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_flags]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_flags
+                  Elf.Sectionheadertable.sectiontable[i].addr = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addr]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addr
+                  Elf.Sectionheadertable.sectiontable[i].offset = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_offset]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_offset
+                  Elf.Sectionheadertable.sectiontable[i].size = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_size]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_size
+            elif Elf.Elfheader.struct == "01":  # x32
+                  Elf.Sectionheadertable.sectiontable[i].flags = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_flags]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_flags
+                  Elf.Sectionheadertable.sectiontable[i].addr = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addr]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addr
+                  Elf.Sectionheadertable.sectiontable[i].offset = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_offset]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_offset
+                  Elf.Sectionheadertable.sectiontable[i].size = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_size]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_size
+            
+            Elf.Sectionheadertable.sectiontable[i].link = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_link]
+            index += Elf.Sectionheadertable.sectiontable[i].sizeof_link
+            Elf.Sectionheadertable.sectiontable[i].info = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_info]
+            index += Elf.Sectionheadertable.sectiontable[i].sizeof_info
+
+            if Elf.Elfheader.struct == "02":  # x64
+                  Elf.Sectionheadertable.sectiontable[i].addralign = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addralign]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addralign
+                  Elf.Sectionheadertable.sectiontable[i].entsize = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_entsize]
+                  index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_entsize
+            elif Elf.Elfheader.struct == "01":  # x32
+                  Elf.Sectionheadertable.sectiontable[i].addralign = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addralign]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addralign
+                  Elf.Sectionheadertable.sectiontable[i].entsize = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize]
+                  index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
