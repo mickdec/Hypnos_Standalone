@@ -16,25 +16,24 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
-    outputfile = "ELFx64_EDITED_printf.out"
-    HexContent = LibByteEditor.GetHexFromFile(inputfile)
-    ElfInput = LibElfAnnalyzer.Extract(HexContent)
-    ElfInput.PrintELF()
+    # inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
+    # outputfile = "ELFx64_EDITED_printf.out"
+    # HexContent = LibByteEditor.GetHexFromFile(inputfile)
+    # ElfInput = LibElfAnnalyzer.Extract(HexContent)
+    # ElfInput.PrintELF()
 
-    shellcode = "0000000000000000000000000000000000000000000000000000000000000000"
+    # shellcode = "0000000000000000000000000000000000000000000000000000000000000000"
 
-    LibDebug.Log("WORK", "Generating new section..")
-    LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
+    # LibDebug.Log("WORK", "Generating new section..")
+    # LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
 
-    LibDebug.Log("WORK", "Calculating new EntryPoint..")
-    LibElfEditor.ModifyEntryPoint(ElfInput, "")
+    # LibDebug.Log("WORK", "Calculating new EntryPoint..")
+    # LibElfEditor.ModifyEntryPoint(ElfInput, "")
 
-    LibDebug.Log("WORK", "Generating edited executable..")
-    LibByteEditor.CreateExeFromPe(outputfile, ElfInput)
+    # LibDebug.Log("WORK", "Generating edited executable..")
+    # LibByteEditor.CreateExeFromPe(outputfile, ElfInput)
 
-
-    exit()
+    # exit()
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
 
@@ -59,6 +58,10 @@ def menu():
                 LibDebug.Log("ERROR", "Generation failed..")
         elif value == "edit" or value == "e":
             LibDebug.Log("WORK", "Generating executable..")
+            print("There is the sample list :")
+            for (dirpath, _, filenames) in os.walk("EXECUTABLE"):
+                for file in filenames:
+                    print(dirpath + file)
             value = input("Enter the file you want to exploit : ")
             LibDebug.CheckFile(value)
             inputfile = value
