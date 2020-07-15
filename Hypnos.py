@@ -61,7 +61,7 @@ def menu():
             print("There is the sample list :")
             for (dirpath, _, filenames) in os.walk("EXECUTABLE"):
                 for file in filenames:
-                    print(dirpath + file)
+                    print(dirpath +"/"+ file)
             value = input("Enter the file you want to exploit : ")
             LibDebug.CheckFile(value)
             inputfile = value
@@ -73,9 +73,9 @@ def menu():
     PeInput = LibPeAnnalyzer.Extract(HexContent)
 
     if PeInput.Optionalpeheader.signature == "020b":
-            print("!! Your file is a X64  beware to pick a X64  shellcode !!")
+            print("!! Your file is a X64 beware to pick a X64 shellcode !!")
     elif PeInput.Optionalpeheader.signature == "010b":
-            print("!! Your file is a X32  beware to pick a X32  shellcode !!")
+            print("!! Your file is a X32 beware to pick a X32 shellcode !!")
 
     print("It's time to generate a shellcode .\nHere's a list of options :")
 
