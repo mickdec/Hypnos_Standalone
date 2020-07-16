@@ -1,22 +1,20 @@
-<div align="center">
-<img src="READMERES/Heapnos-1920x1080.png">
-</div>
-
 About
 -----
 
-A multi-library tool, initially developed for binary exploitation.
-Initally developped for a school project, it get a little bit more of extent.
+Have you ever wished to cave code a binary in a second ?
+Hypnos will do it.
+
+Work on Linux/Win
 
 Prerequisites
 -------------
 
+[GCC]
 [Python3](https://www.python.org/)
-
-gcc ([Cygwin for Windows](https://cygwin.com/install.html))
 
 Installation
 -----------------
+
 >Install gcc
 
 >Install python3
@@ -26,10 +24,17 @@ Installation
 git clone https://github.com/mickdec/Hypnos
 ```
 
->Install python dependencies (only colorama ATM)
-python3 -m pip install -r requirements.txt
+**Examples**
+Using a WinExec shellcode for Windows x32 :
+<p align="center">
+  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/hypnos_standalone/master/READMERES/A.gif" />
+</p>
 
-**How it works**
+Using a Reverse_TCP shellcode for Windows x32 :
+<p align="center">
+  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/hypnos_standalone/master/READMERES/B.gif" />
+</p>
+
 
 Exploiting WinPE32/64
 ----------------------
@@ -37,4 +42,4 @@ Initially and currently being developed by **@mickdec**
 
 Exploiting ELF
 ----------------------
-Initially and currently being developed by **@Hephaisdes** and **@Migoliatte**
+Initially being developed by **@mickdec**, currently being developed by **@Hephaisdes** and **@Migoliatte**
