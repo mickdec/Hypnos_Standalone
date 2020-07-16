@@ -10,7 +10,8 @@ Work on Linux/Win
 Prerequisites
 -------------
 
-[GCC] gcc
+GCC
+
 [Python3](https://www.python.org/)
 
 Installation
