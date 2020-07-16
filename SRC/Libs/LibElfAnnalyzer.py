@@ -2,13 +2,24 @@
 Library made for analyzing ELF file.
 -class ELFHEADER
       -string ToHex(self)
-
+-class PROGRAMHEADER
+      -string ToHex(self)
+-class PROGRAMHEADERTABLE
+      -string ToHex(self)
+-class SECTIONHEADER
+      -string ToHex(self)
+-class SECTIONHEADERTABLE
+      -string ToHex(self)
 -class ELF
       -void PrintELF()
       -void PrintElfHeader()
+      -void PrintProgramHeaderTable()
+      -void PrintSectionHeaderTable()
       -string ToHex()
--LibElfAnnalyzer.ELF Extract(content: str)
+-LibPeAnnalyzer.ELF Extract(content: str)
 -int ExtractELFHeader(content: str, Elf: ELF, index: int)
+-int ExtractProgramHeaderTable(content: str, Elf: ELF, index: int)
+-int ExtractSectionHeaderTable(content: str, Elf: ELF, index: int)
 '''
 from SRC.Libs import LibDebug
 from SRC.Libs import LibByteEditor
@@ -16,6 +27,10 @@ from datetime import datetime
 BYTE = 2
 
 class ELFHEADER:
+      '''
+      ELF HEADER Class.
+      -string ToHex()
+      '''
       def __init__(self):
             self.magic = "" #0x7f + ELF
             self.struct = "" #0,1,2 (Aucun, x64 ou x32)
@@ -86,6 +101,10 @@ class ELFHEADER:
             return content
 
 class PROGRAMHEADER:
+      '''
+      PROGRAM HEADER Class.
+      -string ToHex()
+      '''
       def __init__(self):
             self.type = ""
             self.flags = ""
@@ -126,6 +145,10 @@ class PROGRAMHEADER:
             return content
 
 class PROGRAMHEADERTABLE:
+      '''
+      PROGRAM HEADER TABLE Class.
+      -string ToHex()
+      '''
       def __init__(self):
             self.headertable = []
       
@@ -140,6 +163,10 @@ class PROGRAMHEADERTABLE:
             return content
 
 class SECTIONHEADER:
+      '''
+      SECTION HEADER Class.
+      -string ToHex()
+      '''
       def __init__(self):
             self.name = ""
             self.type = ""
@@ -186,6 +213,10 @@ class SECTIONHEADER:
             return content
 
 class SECTIONHEADERTABLE:
+      '''
+      SECTION HEADER TABLE Class.
+      -string ToHex()
+      '''
       def __init__(self):
             self.sectiontable = []
       
@@ -204,6 +235,8 @@ class ELF:
       ELF Class.
       -void PrintELF()
       -void PrintElfHeader()
+      -void PrintProgramHeaderTable()
+      -void PrintSectionHeaderTable()
       -string ToHex()
       '''
       def __init__(self):
@@ -249,6 +282,10 @@ class ELF:
 
 
       def PrintProgramHeaderTable(self):
+            '''
+            Print the Program Header Table.
+            -return: void
+            '''
             print("\nPROGRAMHEADERTABLE :")
             for i in range(0, int(LibByteEditor.RevertBytes(self.Elfheader.entrynumber_programheader), 16)):
                   print("Program table " + str(i) + " :")
@@ -262,6 +299,10 @@ class ELF:
                   print("     Align : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].align))
 
       def PrintSectionHeaderTable(self):
+            '''
+            Print the Section Header Table.
+            -return: void
+            '''
             print("\nSECTIONHEADERTABLE :")
             for i in range(0, int(LibByteEditor.RevertBytes(self.Elfheader.entrynumber_sectionheader), 16)):
                   print("Section " + str(i) + " :")

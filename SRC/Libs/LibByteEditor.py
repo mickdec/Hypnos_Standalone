@@ -150,6 +150,7 @@ def CreateExeFromPe(output: str, Pe):
 
 def AlignData(size: int, alignment, address: str):
     '''
+    Align a PE Data with sections.
     -return: string
     '''
     if size % alignment != 0:

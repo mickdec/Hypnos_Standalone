@@ -1,8 +1,7 @@
 '''
-Library made for editing the values of a PE class.
--LibPeAnnalyzer.PE ChangeCOFFTimestamp(Pe: LibPeAnnalyzer.PE, date: str)
--void AddSection(Pe, sectionname: str, shellcode: str)
--void ModifyEntryPoint(Pe, entrypoint:str)
+Library made for editing the values of a ELF class.
+-void AddSection(Elf, sectionname: str, rawdata: str)
+-void ModifyEntryPoint(Elf, entrypoint: str)
 '''
 from SRC.Core import Globals
 from SRC.Libs import LibDebug
@@ -19,7 +18,7 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     '''
 
 
-def ModifyEntryPoint(Pe, entrypoint: str):
+def ModifyEntryPoint(Elf, entrypoint: str):
     '''
     Edit the entrypoint of a ELF
     return: void

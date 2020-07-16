@@ -3,8 +3,8 @@ Library made for all the debuging purpose.
 -class ENV
 -string RevertString(content:str)
 -void Log(status: "WORK:SUCCESS:ERROR", info: str)
--void CheckPreReq()
 -string CheckEnv()
+-void CheckHypnosReq():
 -int CheckArgs(argv: list)
 -void CheckFile(input_file: str)
 -string StringToHex(content: str)
@@ -22,6 +22,9 @@ import platform
 import subprocess
 
 class ENV:
+      '''
+      Environnment CLASS.
+      '''
       def __init__(self):
             self.SYSTEM = platform.uname().system
             self.ARCH = platform.uname().machine
@@ -36,41 +39,32 @@ def RevertString(content: str):
 
 
 def Log(status: "INFO:WORK:SUCCESS:ERROR", info: str):
-    '''
-    Print prettier informations logs.
-    INFO, WORK, SUCCESS, ERROR
-    -return: void
-    '''
-    if status == "WORK":
-        print("[-] " + info)
-    elif status == "SUCCESS":
-        print("[+] " + info)
-    elif status == "ERROR":
-        print("[X] " + info)
-    elif status == "INFO":
-        print("[i] " + info)
+      '''
+      Print prettier informations logs.
+      INFO, WORK, SUCCESS, ERROR
+      -return: void
+      '''
+      if status == "WORK":
+            print("[-] " + info)
+      elif status == "SUCCESS":
+            print("[+] " + info)
+      elif status == "ERROR":
+            print("[X] " + info)
+      elif status == "INFO":
+            print("[i] " + info)
 
 
 def CheckEnv():
-    '''
-    Check the environment, and all the ressources to run Andros.
-    -return: void
-    '''
-    try:
-      env = ENV()
-      return env
-    except:
-      Log("ERROR", "Error while trying to get system informations.")
-      exit()
-
-def CheckHephaistosReq():
       '''
-      Check the prerequistes for using Hephaistos.
+      Check the environment, and all the ressources to run Hypnos.
       -return: void
       '''
-      error = False
-      if error:
-            sys.exit(0)
+      try:
+            env = ENV()
+            return env
+      except:
+            Log("ERROR", "Error while trying to get system informations.")
+            exit()
 
 def CheckHypnosReq():
       '''
@@ -92,55 +86,32 @@ def CheckHypnosReq():
       except:
             LibDebug.Log("ERROR", "Python3 can't be invoqued with 'python3' please considering reinstalling Python3. Hypnos need it.")
             error = True
-      # try:
-      #       process = subprocess.Popen(['nasm'])
-      #       process.terminate()
-      #       LibDebug.Log("SUCCESS", "NASM ok.")
-      # except:
-      #       LibDebug.Log("ERROR", "NASM is not FOUND (install or edit your system vars) on your system. Hypnos need it. https://www.nasm.us/")
-      #       error = True
-      if error:
-            sys.exit(0)
-
-def CheckJanusReq():
-      '''
-      Check the prerequistes for using Janus CoreModule.
-      -return: void
-      '''
-      error = False
-      try:
-            process = subprocess.Popen(['nmap'])
-            process.terminate()
-            LibDebug.Log("SUCCESS", "NMAP ok.")
-      except:
-            LibDebug.Log("ERROR", "NMAP is not FOUND on your system. Janus need it. https://nmap.org/")
-            error = True
       if error:
             sys.exit(0)
 
 
 def CheckArgs(argv: list):
-    '''
-    Check if the arguments are corrects to start the program.
-    -return: int
-    '''
-    if argv[1] == "":
-          return 0
-    try:
-      CheckFile(argv[1])
-      return 1
-    except:
-      return 0
+      '''
+      Check if the arguments are corrects to start the program.
+      -return: int
+      '''
+      if argv[1] == "":
+            return 0
+      try:
+            CheckFile(argv[1])
+            return 1
+      except:
+            return 0
 
 
 def CheckFile(input_file: str):
-    '''
-    Check if the specified file exist.
-    -return: void
-    '''
-    if not os.path.isfile(input_file):
-        Log("ERROR", "Specified file \"" + input_file + "\" didn't exist. Exiting.")
-        exit()
+      '''
+      Check if the specified file exist.
+      -return: void
+      '''
+      if not os.path.isfile(input_file):
+            Log("ERROR", "Specified file \"" + input_file + "\" didn't exist. Exiting.")
+            exit()
 
 
 def StringToHex(content: str):

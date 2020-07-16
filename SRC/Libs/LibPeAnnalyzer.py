@@ -43,6 +43,10 @@ BYTE = 2
 
 
 class MSDOSHEADER:
+      '''
+      msdos header CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.signature = ""
             self.lastsize = ""
@@ -113,6 +117,10 @@ class MSDOSHEADER:
 
 
 class STUBPROGRAM:  # Pourquoi pas l'analyser un jour pour une future édition "Cannot be run in HAX mode. Edit c'est faisable avec une option de compilation."
+      '''
+      STUB program CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.stub = ""
             self.sizeof_stub = 2*BYTE
@@ -130,6 +138,10 @@ class STUBPROGRAM:  # Pourquoi pas l'analyser un jour pour une future édition "
 
 # Pourquoi pas lister les machines aux signatures (Fausser la signature ? == resultats inconnus \o/)
 class SIGNATURE:
+      '''
+      Signature CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.signature = ""
             self.sizeof_signature = 4*BYTE
@@ -146,6 +158,10 @@ class SIGNATURE:
 
 
 class COFFHEADER:
+      '''
+      COFF header CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.machine = ""
             self.numberofsections = ""
@@ -178,6 +194,10 @@ class COFFHEADER:
             return content
 
 class DATADIRECTORY:
+      '''
+      Data directory CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.virtualaddress = ""
             self.size = ""
@@ -186,6 +206,10 @@ class DATADIRECTORY:
             self.sizeof_DATADIRECTORY = self.sizeof_virtualaddress + self.sizeof_size
 
 class OPTIONALPEHEADER:
+      '''
+      Optionnal header CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.signature = ""
             self.majorlinkerversion = ""
@@ -301,6 +325,10 @@ class OPTIONALPEHEADER:
             return content
 
 class IMAGESECTIONHEADER:
+      '''
+      Image section header CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.name = ""
             self.virtualsize = ""
@@ -343,6 +371,10 @@ class IMAGESECTIONHEADER:
             return content
 
 class SECTIONTABLE:
+      '''
+      Section table CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.sections = []
       
@@ -357,6 +389,10 @@ class SECTIONTABLE:
             return content
 
 class DUMMY:
+      '''
+      Dummy CLASS.
+      -string ToHex(self)
+      '''
       def __init__(self):
             self.dummyindex = 0
             self.dum01 = ""
@@ -526,6 +562,10 @@ class PE:
                   print("SZ " + str(i+1) + " : " + self.Optionalpeheader.datadirectory[i].size)
       
       def PrintSectionTable(self):
+            '''
+            Print the Section table.
+            -return: void
+            '''
             print("\nSECTIONTABLE :")
             for i in range(0, int(self.Coffheader.numberofsections, 16)):
                   print("Image section " + str(i) + " :")
@@ -896,5 +936,9 @@ def ExtractSectionsTable(content: str, Pe: PE, index: int):
       return index
 
 def ExtractDummy(content: str, Pe: PE, index: int):
+      '''
+      Extract the data part of a PE binnary.
+      -return: LibPeAnnalyzer.PE
+      '''
       Pe.Dummy.dummyindex = index
       Pe.Dummy.dum01 = content[index:len(content)]

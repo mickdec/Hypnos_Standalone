@@ -8,6 +8,7 @@ Library made for working one generated and obfuscated C source code.
 -string ObfuscateC(inputFile: str, complexity)
 -string GenerateObfuscated(obfuscated: OBFUSCATED, outputfile: str)
 -string Compile(source: str)
+-string ObfuscateShellcode(shellcode: LibShellcode.SHELLCODE, complexity)
 '''
 from SRC.Libs import LibShellcode
 import random
@@ -16,12 +17,18 @@ import os
 
 
 class FUNCTION:
+    '''
+    Function CLASS for the generation of a .c
+    '''
     def __init__(self):
         self.name = ""
         self.content = ""
 
 
 class OBFUSCATED:
+    '''
+    Obfuscated CLASS for the generation of a .c obfuscated
+    '''
     def __init__(self):
         self.dictionnary = ""
         self.includes = []
