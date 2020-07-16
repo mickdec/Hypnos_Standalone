@@ -27,12 +27,12 @@ git clone https://github.com/mickdec/Hypnos
 **Examples**
 Using a WinExec shellcode for Windows x32 :
 <p align="center">
-  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/hypnos_standalone/master/READMERES/A.gif" />
+  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/Hypnos_Standalone/master/READMERES/A.gif" />
 </p>
 
 Using a Reverse_TCP shellcode for Windows x32 :
 <p align="center">
-  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/hypnos_standalone/master/READMERES/B.gif" />
+  <img style="width:70%" src="https://raw.githubusercontent.com/mickdec/Hypnos_Standalone/master/READMERES/B.gif" />
 </p>
 
 
