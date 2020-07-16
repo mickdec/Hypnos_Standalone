@@ -2,6 +2,7 @@ About
 -----
 
 Have you ever wished to cave code a binary in a second ?
+
 Hypnos will do it.
 
 Work on Linux/Win
@@ -9,7 +10,7 @@ Work on Linux/Win
 Prerequisites
 -------------
 
-[GCC]
+[GCC] gcc
 [Python3](https://www.python.org/)
 
 Installation
