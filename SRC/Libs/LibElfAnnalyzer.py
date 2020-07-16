@@ -75,6 +75,7 @@ class ELFHEADER:
             self.sizeof_entrysize_sectionheader = 2*BYTE
             self.sizeof_entrynumber_sectionheader = 2*BYTE
             self.sizeof_sectionnames_sectiontable_index = 2*BYTE
+            
       def ToHex(self):
             '''
             Return the section into a HEX string.
@@ -128,6 +129,7 @@ class PROGRAMHEADER:
             self.x64_sizeof_memsz = 8*BYTE
             self.x32_sizeof_align = 4*BYTE
             self.x64_sizeof_align = 8*BYTE
+
       def ToHex(self):
             '''
             Return the section into a HEX string.
@@ -194,6 +196,7 @@ class SECTIONHEADER:
             self.x64_sizeof_addralign = 8*BYTE
             self.x32_sizeof_entsize = 4*BYTE
             self.x64_sizeof_entsize = 8*BYTE
+
       def ToHex(self):
             '''
             Return the section into a HEX string.
@@ -219,7 +222,7 @@ class SECTIONHEADERTABLE:
       '''
       def __init__(self):
             self.sectiontable = []
-      
+
       def ToHex(self):
             '''
             Return the section into a HEX string.
@@ -279,7 +282,6 @@ class ELF:
             print("Size of Entry in Section Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrysize_sectionheader))
             print("Number of entry in Section Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrynumber_sectionheader))
             print("Index of Section Names in Section Table : " + LibByteEditor.RevertBytes(self.Elfheader.sectionnames_sectiontable_index))
-
 
       def PrintProgramHeaderTable(self):
             '''
