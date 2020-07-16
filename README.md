@@ -23,7 +23,7 @@ Installation
 
 >Clone the repo
 ```Shell
-git clone https://github.com/mickdec/Hypnos
+git clone https://github.com/mickdec/Hypnos_Standalone
 ```
 
 **Examples**
