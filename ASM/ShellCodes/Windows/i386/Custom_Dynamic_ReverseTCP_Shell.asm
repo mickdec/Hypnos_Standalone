@@ -1,3 +1,4 @@
+; HYPNOS SHELLCODE INC.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Explication du shellcode.
 ; -On crée des varibales

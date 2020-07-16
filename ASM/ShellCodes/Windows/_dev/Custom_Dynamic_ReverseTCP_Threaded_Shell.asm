@@ -1,3 +1,4 @@
+; HYPNOS SHELLCODE INC.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Fonctionne en standalone mais pas inséré dans une section, Je pense que le problème viens du chargement des DLL
 ; Un Thread ne peux ce lancer qu'à la fin du chargements des DLL de son main Thread.
