@@ -444,37 +444,37 @@ def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
       LibDebug.Log("WORK", "Extracting PROGRAM Header.")
       for i in range(0, int(LibByteEditor.RevertBytes(Elf.Elfheader.entrynumber_programheader), 16)):
             Elf.Programheadertable.headertable.append(PROGRAMHEADER())
-            Elf.Programheadertable.headertable[i].type = content[index:index + Elf.Programheadertable.headertable[i].sizeof_type]
+            Elf.Programheadertable.headertable[i].type = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].sizeof_type])
             index += Elf.Programheadertable.headertable[i].sizeof_type
             if Elf.Elfheader.struct == "02":  # x64
-                  Elf.Programheadertable.headertable[i].flags = content[index:index + Elf.Programheadertable.headertable[i].sizeof_flags]
+                  Elf.Programheadertable.headertable[i].flags = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].sizeof_flags])
                   index += Elf.Programheadertable.headertable[i].sizeof_flags
-                  Elf.Programheadertable.headertable[i].offset = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_offset]
+                  Elf.Programheadertable.headertable[i].offset = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_offset])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_offset
-                  Elf.Programheadertable.headertable[i].vaddr = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_vaddr]
+                  Elf.Programheadertable.headertable[i].vaddr = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_vaddr])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_vaddr
-                  Elf.Programheadertable.headertable[i].paddr = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_paddr]
+                  Elf.Programheadertable.headertable[i].paddr = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_paddr])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_paddr
-                  Elf.Programheadertable.headertable[i].filesz = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_filesz]
+                  Elf.Programheadertable.headertable[i].filesz = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_filesz])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_filesz
-                  Elf.Programheadertable.headertable[i].memsz = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_memsz]
+                  Elf.Programheadertable.headertable[i].memsz = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_memsz])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_memsz
-                  Elf.Programheadertable.headertable[i].align = content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_align]
+                  Elf.Programheadertable.headertable[i].align = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x64_sizeof_align])
                   index += Elf.Programheadertable.headertable[i].x64_sizeof_align
             elif Elf.Elfheader.struct == "01":  # x32
-                  Elf.Programheadertable.headertable[i].offset = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_offset]
+                  Elf.Programheadertable.headertable[i].offset = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_offset])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_offset
-                  Elf.Programheadertable.headertable[i].vaddr = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_vaddr]
+                  Elf.Programheadertable.headertable[i].vaddr = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_vaddr])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_vaddr
-                  Elf.Programheadertable.headertable[i].paddr = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_paddr]
+                  Elf.Programheadertable.headertable[i].paddr = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_paddr])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_paddr
-                  Elf.Programheadertable.headertable[i].filesz = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_filesz]
+                  Elf.Programheadertable.headertable[i].filesz = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_filesz])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_filesz
-                  Elf.Programheadertable.headertable[i].memsz = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_memsz]
+                  Elf.Programheadertable.headertable[i].memsz = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_memsz])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_memsz
-                  Elf.Programheadertable.headertable[i].flags = content[index:index + Elf.Programheadertable.headertable[i].sizeof_flags]
+                  Elf.Programheadertable.headertable[i].flags = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].sizeof_flags])
                   index += Elf.Programheadertable.headertable[i].sizeof_flags
-                  Elf.Programheadertable.headertable[i].align = content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_align]
+                  Elf.Programheadertable.headertable[i].align = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].x32_sizeof_align])
                   index += Elf.Programheadertable.headertable[i].x32_sizeof_align
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
@@ -487,43 +487,43 @@ def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
       LibDebug.Log("WORK", "Extracting SECTION Header Table.")
       for i in range(0, int(LibByteEditor.RevertBytes(Elf.Elfheader.entrynumber_sectionheader), 16)):
             Elf.Sectionheadertable.sectiontable.append(SECTIONHEADER())
-            Elf.Sectionheadertable.sectiontable[i].name = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_name]
+            Elf.Sectionheadertable.sectiontable[i].name = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_name])
             index += Elf.Sectionheadertable.sectiontable[i].sizeof_name
-            Elf.Sectionheadertable.sectiontable[i].type = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_type]
+            Elf.Sectionheadertable.sectiontable[i].type = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_type])
             index += Elf.Sectionheadertable.sectiontable[i].sizeof_type
             if Elf.Elfheader.struct == "02":  # x64
-                  Elf.Sectionheadertable.sectiontable[i].flags = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_flags]
+                  Elf.Sectionheadertable.sectiontable[i].flags = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_flags])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_flags
-                  Elf.Sectionheadertable.sectiontable[i].addr = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addr]
+                  Elf.Sectionheadertable.sectiontable[i].addr = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addr])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addr
-                  Elf.Sectionheadertable.sectiontable[i].offset = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_offset]
+                  Elf.Sectionheadertable.sectiontable[i].offset = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_offset])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_offset
-                  Elf.Sectionheadertable.sectiontable[i].size = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_size]
+                  Elf.Sectionheadertable.sectiontable[i].size = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_size])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_size
             elif Elf.Elfheader.struct == "01":  # x32
-                  Elf.Sectionheadertable.sectiontable[i].flags = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_flags]
+                  Elf.Sectionheadertable.sectiontable[i].flags = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_flags])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_flags
-                  Elf.Sectionheadertable.sectiontable[i].addr = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addr]
+                  Elf.Sectionheadertable.sectiontable[i].addr = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addr])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addr
-                  Elf.Sectionheadertable.sectiontable[i].offset = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_offset]
+                  Elf.Sectionheadertable.sectiontable[i].offset = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_offset])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_offset
-                  Elf.Sectionheadertable.sectiontable[i].size = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_size]
+                  Elf.Sectionheadertable.sectiontable[i].size = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_size])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_size
             
-            Elf.Sectionheadertable.sectiontable[i].link = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_link]
+            Elf.Sectionheadertable.sectiontable[i].link = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_link])
             index += Elf.Sectionheadertable.sectiontable[i].sizeof_link
-            Elf.Sectionheadertable.sectiontable[i].info = content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_info]
+            Elf.Sectionheadertable.sectiontable[i].info = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_info])
             index += Elf.Sectionheadertable.sectiontable[i].sizeof_info
 
             if Elf.Elfheader.struct == "02":  # x64
-                  Elf.Sectionheadertable.sectiontable[i].addralign = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addralign]
+                  Elf.Sectionheadertable.sectiontable[i].addralign = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addralign])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_addralign
-                  Elf.Sectionheadertable.sectiontable[i].entsize = content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_entsize]
+                  Elf.Sectionheadertable.sectiontable[i].entsize = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x64_sizeof_entsize])
                   index += Elf.Sectionheadertable.sectiontable[i].x64_sizeof_entsize
             elif Elf.Elfheader.struct == "01":  # x32
-                  Elf.Sectionheadertable.sectiontable[i].addralign = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addralign]
+                  Elf.Sectionheadertable.sectiontable[i].addralign = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addralign])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_addralign
-                  Elf.Sectionheadertable.sectiontable[i].entsize = content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize]
+                  Elf.Sectionheadertable.sectiontable[i].entsize = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize])
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
@@ -534,4 +534,4 @@ def ExtractDummy(content: str, Elf: ELF, index: int):
       -return: LibElfAnnalyzer.ELF
       '''
       Elf.Dummy.dummyindex = index
-      Elf.Dummy.dum01 = content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2]
+      Elf.Dummy.dum01 = LibByteEditor.RevertBytes(content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2])
