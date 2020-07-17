@@ -16,6 +16,9 @@ Library made for all the debuging purpose.
 from SRC.Libs import LibDebug
 from SRC.Libs import LibPeAnnalyzer
 from SRC.Libs import LibByteEditor
+
+from SRC.Libs import LibElfAnnalyzer
+
 import sys
 import os
 import platform
@@ -606,3 +609,84 @@ def ComparePe(Pe1: LibPeAnnalyzer.PE, Pe2: LibPeAnnalyzer.PE):
                                     Pe1.SectionTable.sections[i].characteristics)
                               print("Pe2 characteristics : " +
                                     Pe2.SectionTable.sections[i].characteristics)
+
+
+def CompareElf(Elf1: LibElfAnnalyzer.ELF, Elf2: LibElfAnnalyzer.ELF):
+      '''
+      Compare two ELF object together and print the differences.
+      -return: void
+      '''
+      
+      if Elf1.Elfheader.ToHex() != Elf2.Elfheader.ToHex():
+            if Elf2.Elfheader.magic != Elf1.Elfheader.magic:
+                  print("magic Elf1 : " + Elf1.Elfheader.magic,end=' ')
+                  print("magic Elf2 : " + Elf2.Elfheader.magic)
+            if Elf2.Elfheader.struct != Elf1.Elfheader.struct:
+                  print("struct Elf1 : " + Elf1.Elfheader.struct,end=' ')
+                  print("struct Elf2 : " + Elf2.Elfheader.struct)
+            if Elf2.Elfheader.endianness != Elf1.Elfheader.endianness:
+                  print("endianness Elf1 : " + Elf1.Elfheader.endianness,end=' ')
+                  print("endianness Elf2 : " + Elf2.Elfheader.endianness)
+            if Elf2.Elfheader.elfheaderversion != Elf1.Elfheader.elfheaderversion:
+                  print("elfheaderversion Elf1 : " + Elf1.Elfheader.elfheaderversion,end=' ')
+                  print("elfheaderversion Elf2 : " + Elf2.Elfheader.elfheaderversion)
+            if Elf2.Elfheader.osabi != Elf1.Elfheader.osabi:
+                  print("osabi Elf1 : " + Elf1.Elfheader.osabi,end=' ')
+                  print("osabi Elf2 : " + Elf2.Elfheader.osabi)
+            if Elf2.Elfheader.abiversion != Elf1.Elfheader.abiversion:
+                  print("abiversion Elf1 : " + Elf1.Elfheader.abiversion,end=' ')
+                  print("abiversion Elf2 : " + Elf2.Elfheader.abiversion)
+            if Elf2.Elfheader.dummy != Elf1.Elfheader.dummy:
+                  print("dummy Elf1 : " + Elf1.Elfheader.dummy,end=' ')
+                  print("dummy Elf2 : " + Elf2.Elfheader.dummy)
+            if Elf2.Elfheader.filetype != Elf1.Elfheader.filetype:
+                  print("filetype Elf1 : " + Elf1.Elfheader.filetype,end=' ')
+                  print("filetype Elf2 : " + Elf2.Elfheader.filetype)
+            if Elf2.Elfheader.machine != Elf1.Elfheader.machine:
+                  print("machine Elf1 : " + Elf1.Elfheader.machine,end=' ')
+                  print("machine Elf2 : " + Elf2.Elfheader.machine)
+            if Elf2.Elfheader.machineversion != Elf1.Elfheader.machineversion:
+                  print("machineversion Elf1 : " + Elf1.Elfheader.machineversion,end=' ')
+                  print("machineversion Elf2 : " + Elf2.Elfheader.machineversion)
+            if Elf2.Elfheader.entrypoint != Elf1.Elfheader.entrypoint:
+                  print("entrypoint Elf1 : " + Elf1.Elfheader.entrypoint,end=' ')
+                  print("entrypoint Elf2 : " + Elf2.Elfheader.entrypoint)
+            if Elf2.Elfheader.offset_programheader != Elf1.Elfheader.offset_programheader:
+                  print("offset_programheader Elf1 : " + Elf1.Elfheader.offset_programheader,end=' ')
+                  print("offset_programheader Elf2 : " + Elf2.Elfheader.offset_programheader)
+            if Elf2.Elfheader.offset_sectionsheader != Elf1.Elfheader.offset_sectionsheader:
+                  print("offset_sectionsheader Elf1 : " + Elf1.Elfheader.offset_sectionsheader,end=' ')
+                  print("offset_sectionsheader Elf2 : " + Elf2.Elfheader.offset_sectionsheader)
+            if Elf2.Elfheader.procflags != Elf1.Elfheader.procflags:
+                  print("procflags Elf1 : " + Elf1.Elfheader.procflags,end=' ')
+                  print("procflags Elf2 : " + Elf2.Elfheader.procflags)
+            if Elf2.Elfheader.elfheadersize != Elf1.Elfheader.elfheadersize:
+                  print("elfheadersize Elf1 : " + Elf1.Elfheader.elfheadersize,end=' ')
+                  print("elfheadersize Elf2 : " + Elf2.Elfheader.elfheadersize)
+            if Elf2.Elfheader.entrysize_programheader != Elf1.Elfheader.entrysize_programheader:
+                  print("entrysize_programheader Elf1 : " + Elf1.Elfheader.entrysize_programheader,end=' ')
+                  print("entrysize_programheader Elf2 : " + Elf2.Elfheader.entrysize_programheader)
+            if Elf2.Elfheader.entrynumber_programheader != Elf1.Elfheader.entrynumber_programheader:
+                  print("entrynumber_programheader Elf1 : " + Elf1.Elfheader.entrynumber_programheader,end=' ')
+                  print("entrynumber_programheader Elf2 : " + Elf2.Elfheader.entrynumber_programheader)
+            if Elf2.Elfheader.entrysize_sectionheader != Elf1.Elfheader.entrysize_sectionheader:
+                  print("entrysize_sectionheader Elf1 : " + Elf1.Elfheader.entrysize_sectionheader,end=' ')
+                  print("entrysize_sectionheader Elf2 : " + Elf2.Elfheader.entrysize_sectionheader)
+            if Elf2.Elfheader.entrynumber_sectionheader != Elf1.Elfheader.entrynumber_sectionheader:
+                  print("entrynumber_sectionheader Elf1 : " + Elf1.Elfheader.entrynumber_sectionheader,end=' ')
+                  print("entrynumber_sectionheader Elf2 : " + Elf2.Elfheader.entrynumber_sectionheader)
+            if Elf2.Elfheader.sectionnames_sectiontable_index != Elf1.Elfheader.sectionnames_sectiontable_index:
+                  print("sectionnames_sectiontable_index Elf1 : " + Elf1.Elfheader.sectionnames_sectiontable_index,end=' ')
+                  print("sectionnames_sectiontable_index Elf2 : " + Elf2.Elfheader.sectionnames_sectiontable_index)
+      if Elf1.Programheadertable.ToHex() != Elf2.Programheadertable.ToHex():
+            max=len(Elf2.Programheadertable.headertable)
+            if len(Elf2.Programheadertable.headertable) > int(LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_programheader), 16) :
+                  max=int(LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_programheader), 16)
+            if len(Elf2.Programheadertable.headertable) != int(LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_programheader), 16) :
+                  print("Number of section isn't the same ! Elf2 has",len(Elf2.Programheadertable.headertable),"section and the elf1 has",len(Elf1.Programheadertable.headertable),"sections")
+            for i in range(0, max):
+                  if Elf2.Programheadertable.headertable[i].ToHex() != Elf1.Programheadertable.headertable[i].ToHex():
+                        if Elf2.Programheadertable.headertable[i].type != Elf1.Programheadertable.headertable[i].type:
+                              print("headertable[",i,"] Elf1 : " + Elf1.Programheadertable.headertable[i].type,end=' ')
+                              print("headertable[",i,"] Elf1 : " + Elf2.Programheadertable.headertable[i].type)
+ 
