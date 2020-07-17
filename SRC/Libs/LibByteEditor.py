@@ -6,7 +6,7 @@ Library made for editing bytes/HEX content, and creating files.
 -string EditAllExistingContent(content: str, needle: str, replacement: str)
 -string AddContent(content: str, index: int, adding: str)
 -void CreateExeFromHex(output: str, content: str)
--void CreateExeFromPE(output: str, Pe: LibPeAnnalyzer.PE)
+-void CreateBinFromClass(output: str, Pe: LibPeAnnalyzer.PE)
 -string AlignData(size: int, alignment, address: str)
 '''
 from SRC.Libs import LibDebug
@@ -128,7 +128,7 @@ def CreateExeFromHex(output: str, content: str):
         exit()
 
 
-def CreateExeFromPe(output: str, Pe):
+def CreateBinFromClass(output: str, Pe):
     '''
     Create a new EXE with the specified PE class.
     -return: void
