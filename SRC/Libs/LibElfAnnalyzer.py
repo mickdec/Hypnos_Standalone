@@ -100,6 +100,9 @@ class ELFHEADER:
             content += LibByteEditor.RevertBytes(self.sectionnames_sectiontable_index)
             return content
 
+
+
+
 class PROGRAMHEADER:
       '''
       PROGRAM HEADER Class.
@@ -427,6 +430,7 @@ def ExtractELFHeader(content: str, Elf: ELF, index: int):
       index += Elf.Elfheader.sizeof_sectionnames_sectiontable_index
       LibDebug.Log("SUCCESS", "End of the ELF Header extraction.")
       return index
+
 
 def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
       '''
