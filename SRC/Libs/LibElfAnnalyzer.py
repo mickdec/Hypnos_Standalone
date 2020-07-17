@@ -88,7 +88,6 @@ class ELFHEADER:
             content += LibByteEditor.RevertBytes(self.elfheaderversion)
             content += LibByteEditor.RevertBytes(self.osabi)
             content += LibByteEditor.RevertBytes(self.abiversion)
-            content += LibByteEditor.RevertBytes(self.abiversion)
             content += LibByteEditor.RevertBytes(self.dummy)
             content += LibByteEditor.RevertBytes(self.filetype)
             content += LibByteEditor.RevertBytes(self.machine)
@@ -162,6 +161,24 @@ class PROGRAMHEADERTABLE:
             content = ""
             for i in range(0, len(self.headertable)):
                   content += self.headertable[i].ToHex()
+            return content
+
+class DUMMY:
+      '''
+      Dummy CLASS.
+      -string ToHex(self)
+      '''
+      def __init__(self):
+            self.dummyindex = 0
+            self.dum01 = ""
+      
+      def ToHex(self):
+            '''
+            Return the section into a HEX string.
+            -return: string
+            '''
+            content = ""
+            content += self.dum01
             return content
 
 class SECTIONHEADER:
@@ -246,6 +263,7 @@ class ELF:
             self.Elfheader = ELFHEADER()
             self.Programheadertable = PROGRAMHEADERTABLE()
             self.Sectionheadertable = SECTIONHEADERTABLE()
+            self.Dummy = DUMMY()
 
       def PrintELF(self):
             '''
@@ -327,6 +345,7 @@ class ELF:
             content = ""
             content += self.Elfheader.ToHex()
             content += self.Programheadertable.ToHex()
+            content += self.Dummy.ToHex()
             content += self.Sectionheadertable.ToHex()
             return content
 
@@ -341,6 +360,8 @@ def Extract(content: str):
             index = 0
             index = ExtractELFHeader(content, Elf, index)
             index = ExtractProgramHeaderTable(content, Elf, index)
+
+            ExtractDummy(content, Elf, index)
 
             index = int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2
             index = ExtractSectionHeaderTable(content, Elf, index)
@@ -498,3 +519,11 @@ def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
+
+def ExtractDummy(content: str, Elf: ELF, index: int):
+      '''
+      Extract the data part of a Elf binnary.
+      -return: LibElfAnnalyzer.ELF
+      '''
+      Elf.Dummy.dummyindex = index
+      Elf.Dummy.dum01 = content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2]
