@@ -16,21 +16,28 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    inputfile = "ELFx64_EDITED_printf.out"
-    #outputfile = "ELFx64_EDITED_printf.out"
+
+    inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
-    
-    inputfile2 = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
-    HexContent2 = LibByteEditor.GetHexFromFile(inputfile2)
-    ElfInput2 = LibElfAnnalyzer.Extract(HexContent2)
-  
-    LibDebug.CompareElf(ElfInput,ElfInput2)
 
+    outputfile = "ELFx64_EDITED_printf.out"
+    LibByteEditor.CreateBinFromClass(outputfile, ElfInput)
+
+    HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
+    ElfInput2 = LibElfAnnalyzer.Extract(outputfile)
+
+    # ElfInput.PrintELF()
+    LibDebug.CompareElf(ElfInput,ElfInput2)
     #ElfInput.PrintELF()
-    ElfInput.PrintElfHeader()
-    
-    
+    # ElfInput.PrintElfHeader()
+
+    # print(ElfInput2.PrintElfHeader())
+    exit()
+
+
+
+
     # shellcode = "0000000000000000000000000000000000000000000000000000000000000000"
 
     # LibDebug.Log("WORK", "Generating new section..")
@@ -41,12 +48,11 @@ def menu():
 
     # LibDebug.Log("WORK", "Generating edited executable..")
     #
-    # LibByteEditor.CreateBinFromClass(outputfile, ElfInput)
-    
+
     exit()
 
     # outputfile = LibObfuscator.RandomizedString(7) + ".exe"
-# 
+#
     # print(
         # "Welcome to Hypnos Hephaistos Version"
     # )
@@ -78,27 +84,27 @@ def menu():
     # else:
         # LibDebug.Log("ERROR", "Bad entry. Exiting.")
         # exit()
-# 
+#
     # HexContent = LibByteEditor.GetHexFromFile(inputfile)
     # PeInput = LibPeAnnalyzer.Extract(HexContent)
-# 
+#
     # if PeInput.Optionalpeheader.signature == "020b":
             # print("!! Your file is a X64 beware to pick a X64 shellcode !!")
     # elif PeInput.Optionalpeheader.signature == "010b":
             # print("!! Your file is a X32 beware to pick a X32 shellcode !!")
-# 
+#
     # print("It's time to generate a shellcode .\nHere's a list of options :")
-# 
+#
     # shellcodes = []
     # for (dirpath, _, filenames) in os.walk("SHELLCODES"):
         # for file in filenames:
             # shellcodes.append((dirpath+"/"+file).replace("\\","/").replace("ASM/ShellCodes/", "").split(".")[0])
-# 
+#
     # case = []
     # for i in range(0, len(shellcodes)):
         # case += str(i)
         # print("     " + str(i) + " - " + shellcodes[i].replace("SHELLCODES/",""))
-# 
+#
     # value = input("Select one shellcode : ")
     # shellcode = LibShellcode.SHELLCODE()
     # shellcode = LibShellcode.ReadSHELLCODE(shellcodes[int(value)])
@@ -124,7 +130,7 @@ def menu():
     # else:
         # LibDebug.Log("ERROR", "Bad entry. Exiting.")
         # exit()
-# 
+#
     #ANCIENNE GENERATION AVEC NASM
     # shellcodes = []
     # for (dirpath, _, filenames) in os.walk("ASM/ShellCodes"):
@@ -171,23 +177,23 @@ def menu():
     # else:
     #     LibDebug.Log("ERROR", "Bad entry. Exiting.")
   #      exit()
-# 
+#
     # newjump = str(hex(int(LibByteEditor.RevertBytes(PeInput.Optionalpeheader.addressofentrypoint), 16)
                     #   + int(LibByteEditor.RevertBytes(PeInput.Optionalpeheader.imagebase), 16)))[2:]
     # shellcode = shellcode.GetShellcode()
-# 
+#
     # shellcode += "B8" + newjump + "FFE0"
     # LibDebug.Log("SUCCESS", "Shellcode successfully generated.")
-# 
+#
     # LibDebug.Log("WORK", "Generating new section..")
     # LibPeEditor.AddSection(PeInput, ".mew", shellcode)
     # LibDebug.Log("WORK", "Calculating new EntryPoint..")
     # LibPeEditor.ModifyEntryPoint(PeInput, PeInput.SectionTable.sections[int(
         # PeInput.Coffheader.numberofsections, 16)-1].virtualaddress)
-# 
+#
     # LibDebug.Log("WORK", "Generating edited executable..")
     # LibByteEditor.CreateBinFromClass(outputfile, PeInput)
-# 
+#
     # print("Did you want to verify the new executable ? [y/n] : ", end="")
     # value = input()
     # case = ["y", "n"]
@@ -209,7 +215,6 @@ def menu():
     # else:
         # LibDebug.Log("ERROR", "Bad entry. Exiting.")
         # exit()
-# 
+#
 
 menu()
- 
