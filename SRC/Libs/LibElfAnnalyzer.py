@@ -235,6 +235,19 @@ class SECTIONHEADER:
             content += LibByteEditor.RevertBytes(self.addralign)
             content += LibByteEditor.RevertBytes(self.entsize)
             return content
+      
+      def Print(self):
+            print("name : " + self.name)
+            print("type : " + "" + self.type)
+            print("flag : " + self.flags)
+            print("addr : " + self.addr)
+            print("offset : " + self.offset)
+            print("size : " + self.size)
+            print("link : " + self.link)
+            print("info : " + self.info)
+            print("addralign : " + self.addralign)
+            print("entsize : " + self.entsize)
+
 
 class SECTIONHEADERTABLE:
       '''

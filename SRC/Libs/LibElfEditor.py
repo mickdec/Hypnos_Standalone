@@ -76,20 +76,22 @@ def AddSection(Elf, sectionname: str, rawdata: str):
 
 
 def addSectionToHeaderTable(Elf, sectionname: str, addr: str, size: str):
-    content = ""
-    content += "6666"  # LibByteEditor.RevertBytes(self.name)
-    content += "0001"  # type = program data
-    # if 32 = 4 if 64 = 8:
-    content += "0000000000000004"  # flags = EXECUTABLE
-    content += addr  # LibByteEditor.RevertBytes(self.addr)
-    content += "0000000000000000"  # LibByteEditor.RevertBytes(self.offset)
-    content += size  # LibByteEditor.RevertBytes(self.size)
-    # if32
-    #   content += LibByteEditor.RevertBytes(self.link)
-    #    content += LibByteEditor.RevertBytes(self.info)
-    content += "0000000000000000"  # LibByteEditor.RevertBytes(self.addralign)
-    content += "0000000000000000"  # LibByteEditor.RevertBytes(self.entsize)
-    return content
+    # print("======")
+    # print(Elf.Sectionheadertable.sectiontable[29].Print())
+    # print("======")
+    # print("addr : " + addr)
+    section = LibElfAnnalyzer.SECTIONHEADER()
+    section.name = "00000011"
+    section.type = "00000003"
+    section.flags = "0000000000000004"
+    section.addr = "0000000000000000"
+    section.offset = addr
+    section.size = size
+    section.link = "00000000"
+    section.info = "00000000"
+    section.addralign = "0000000000000001"
+    section.entsize = "0000000000000000"
+    return section.ToHex()
 
 
 def ModifyEntryPoint(Elf, entrypoint: str):
