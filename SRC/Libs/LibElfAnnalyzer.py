@@ -454,7 +454,7 @@ def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
       -return: int
       '''
       LibDebug.Log("WORK", "Extracting PROGRAM Header.")
-      for i in range(0, int(LibByteEditor.RevertBytes(Elf.Elfheader.entrynumber_programheader), 16)):
+      for i in range(0, int(Elf.Elfheader.entrynumber_programheader, 16)):
             Elf.Programheadertable.headertable.append(PROGRAMHEADER())
             Elf.Programheadertable.headertable[i].type = LibByteEditor.RevertBytes(content[index:index + Elf.Programheadertable.headertable[i].sizeof_type])
             index += Elf.Programheadertable.headertable[i].sizeof_type
