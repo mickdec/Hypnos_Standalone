@@ -20,15 +20,24 @@ def menu():
     inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
-
     outputfile = "ELFx64_EDITED_printf.out"
-    LibByteEditor.CreateBinFromClass(outputfile, ElfInput)
+    
+    shellcode = "01010101010101010101010101"
 
-    HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
-    ElfInput2 = LibElfAnnalyzer.Extract(outputfile)
+    # LibDebug.Log("WORK", "Generating new section..")
+    LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
+    ElfInput.PrintElfHeader()
+    # LibDebug.Log("WORK", "Calculating new EntryPoint..")
+    # LibElfEditor.ModifyEntryPoint(ElfInput, "")
+
+    # LibDebug.Log("WORK", "Generating edited executable..")
+    #LibByteEditor.CreateBinFromClass(outputfile, ElfInput)
+
+    #HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
+    #ElfInput2 = LibElfAnnalyzer.Extract(HexContent2)
 
     # ElfInput.PrintELF()
-    LibDebug.CompareElf(ElfInput,ElfInput2)
+    #LibDebug.CompareElf(ElfInput,ElfInput2)
     #ElfInput.PrintELF()
     # ElfInput.PrintElfHeader()
 
@@ -38,17 +47,7 @@ def menu():
 
 
 
-    # shellcode = "0000000000000000000000000000000000000000000000000000000000000000"
-
-    # LibDebug.Log("WORK", "Generating new section..")
-    # LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
-
-    # LibDebug.Log("WORK", "Calculating new EntryPoint..")
-    # LibElfEditor.ModifyEntryPoint(ElfInput, "")
-
-    # LibDebug.Log("WORK", "Generating edited executable..")
-    #
-
+    
     exit()
 
     # outputfile = LibObfuscator.RandomizedString(7) + ".exe"

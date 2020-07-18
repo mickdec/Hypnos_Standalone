@@ -14,3 +14,5 @@ _start:
         mov     rsi, rsp
         mov     al, 0x3b
         syscall
+
+jmp 0x00004109

@@ -5,7 +5,7 @@ Library made for editing bytes/HEX content, and creating files.
 -string EditExistingContent(content: str, needle: str, replacement: str, numberoftime: int, index: int)
 -string EditAllExistingContent(content: str, needle: str, replacement: str)
 -string AddContent(content: str, index: int, adding: str)
--void CreateExeFromHex(output: str, content: str)
+-void def CreateBinFromHex(output: str, content: str)
 -void CreateBinFromClass(output: str, Pe: LibPeAnnalyzer.PE)
 -string AlignData(size: int, alignment, address: str)
 '''
@@ -101,7 +101,7 @@ def AddContent(content: str, index: int, adding: str):
         LibDebug.Log("ERROR", "Failed to add the new bytes..")
 
 
-def CreateExeFromHex(output: str, content: str):
+def CreateBinFromHex(output: str, content: str):
     '''
     Create a new EXE with the specified HEX content.
     -return: void

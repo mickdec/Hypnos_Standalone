@@ -104,9 +104,6 @@ class ELFHEADER:
             content += LibByteEditor.RevertBytes(self.sectionnames_sectiontable_index)
             return content
 
-
-
-
 class PROGRAMHEADER:
       '''
       PROGRAM HEADER Class.
@@ -178,7 +175,7 @@ class DUMMY:
       def __init__(self):
             self.dummyindex = 0
             self.dum01 = ""
-      
+            
       def ToHex(self):
             '''
             Return the section into a HEX string.
@@ -288,25 +285,25 @@ class ELF:
             '''
             print("\nELFHEADER :")
             print("Magic number : " + self.Elfheader.magic)
-            print("Structure : " + LibByteEditor.RevertBytes(self.Elfheader.struct))
-            print("Endianness : " + LibByteEditor.RevertBytes(self.Elfheader.endianness))
-            print("ELF header version : " + LibByteEditor.RevertBytes(self.Elfheader.elfheaderversion))
-            print("OS/ABI : " + LibByteEditor.RevertBytes(self.Elfheader.osabi))
-            print("ABI Version : " + LibByteEditor.RevertBytes(self.Elfheader.abiversion))
-            print("Dummy : " + LibByteEditor.RevertBytes(self.Elfheader.dummy))
-            print("File type : " + LibByteEditor.RevertBytes(self.Elfheader.filetype))
-            print("Machine : " + LibByteEditor.RevertBytes(self.Elfheader.machine))
-            print("Machine Version : " + LibByteEditor.RevertBytes(self.Elfheader.machineversion))
-            print("Entrypoint : " + LibByteEditor.RevertBytes(self.Elfheader.entrypoint))
-            print("Program Header offset : " + LibByteEditor.RevertBytes(self.Elfheader.offset_programheader))
-            print("Section Header offset : " + LibByteEditor.RevertBytes(self.Elfheader.offset_sectionsheader))
-            print("Processor flags : " + LibByteEditor.RevertBytes(self.Elfheader.procflags))
-            print("ELF Header size : " + LibByteEditor.RevertBytes(self.Elfheader.elfheadersize))
-            print("Size of Entry in Program Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrysize_programheader))
-            print("Number of entry in Program Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrynumber_programheader))
-            print("Size of Entry in Section Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrysize_sectionheader))
-            print("Number of entry in Section Header : " + LibByteEditor.RevertBytes(self.Elfheader.entrynumber_sectionheader))
-            print("Index of Section Names in Section Table : " + LibByteEditor.RevertBytes(self.Elfheader.sectionnames_sectiontable_index))
+            print("Structure : " + self.Elfheader.struct)
+            print("Endianness : " +self.Elfheader.endianness)
+            print("ELF header version : " + self.Elfheader.elfheaderversion)
+            print("OS/ABI : " + self.Elfheader.osabi)
+            print("ABI Version : " +self.Elfheader.abiversion)
+            print("Dummy : " + self.Elfheader.dummy)
+            print("File type : " +self.Elfheader.filetype)
+            print("Machine : " + self.Elfheader.machine)
+            print("Machine Version : " +self.Elfheader.machineversion)
+            print("Entrypoint : " + self.Elfheader.entrypoint)
+            print("Program Header offset : " +self.Elfheader.offset_programheader)
+            print("Section Header offset : " + self.Elfheader.offset_sectionsheader)
+            print("Processor flags : " + self.Elfheader.procflags)
+            print("ELF Header size : " + self.Elfheader.elfheadersize)
+            print("Size of Entry in Program Header : " +self.Elfheader.entrysize_programheader)
+            print("Number of entry in Program Header : " + self.Elfheader.entrynumber_programheader)
+            print("Size of Entry in Section Header : " + self.Elfheader.entrysize_sectionheader)
+            print("Number of entry in Section Header : " + self.Elfheader.entrynumber_sectionheader)
+            print("Index of Section Names in Section Table : " +self.Elfheader.sectionnames_sectiontable_index)
 
       def PrintProgramHeaderTable(self):
             '''
@@ -314,16 +311,16 @@ class ELF:
             -return: void
             '''
             print("\nPROGRAMHEADERTABLE :")
-            for i in range(0, int(LibByteEditor.RevertBytes(self.Elfheader.entrynumber_programheader), 16)):
+            for i in range(0, int(self.Elfheader.entrynumber_programheader, 16)):
                   print("Program table " + str(i) + " :")
-                  print("     Type : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].type))
-                  print("     Flags : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].flags))
-                  print("     Offset : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].offset))
-                  print("     Vaddr : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].vaddr))
-                  print("     Paddr : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].paddr))
-                  print("     Filesz : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].filesz))
-                  print("     Memsz : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].memsz))
-                  print("     Align : " + LibByteEditor.RevertBytes(self.Programheadertable.headertable[i].align))
+                  print("     Type : " + self.Programheadertable.headertable[i].type)
+                  print("     Flags : " + self.Programheadertable.headertable[i].flags)
+                  print("     Offset : " + self.Programheadertable.headertable[i].offset)
+                  print("     Vaddr : " + self.Programheadertable.headertable[i].vaddr)
+                  print("     Paddr : " + self.Programheadertable.headertable[i].paddr)
+                  print("     Filesz : " +self.Programheadertable.headertable[i].filesz)
+                  print("     Memsz : " + self.Programheadertable.headertable[i].memsz)
+                  print("     Align : " + self.Programheadertable.headertable[i].align)
 
       def PrintSectionHeaderTable(self):
             '''
@@ -331,18 +328,18 @@ class ELF:
             -return: void
             '''
             print("\nSECTIONHEADERTABLE :")
-            for i in range(0, int(LibByteEditor.RevertBytes(self.Elfheader.entrynumber_sectionheader), 16)):
+            for i in range(0, int(self.Elfheader.entrynumber_sectionheader, 16)-1):
                   print("Section " + str(i) + " :")
-                  print("     Name : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].name))
-                  print("     Type : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].type))
-                  print("     Flags : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].flags))
-                  print("     Addr : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].addr))
-                  print("     Offset : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].offset))
-                  print("     Size : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].size))
-                  print("     Link : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].link))
-                  print("     Info : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].info))
-                  print("     AddrAlign : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].addralign))
-                  print("     EntSize : " + LibByteEditor.RevertBytes(self.Sectionheadertable.sectiontable[i].entsize))
+                  print("     Name : " + self.Sectionheadertable.sectiontable[i].name)
+                  print("     Type : " + self.Sectionheadertable.sectiontable[i].type)
+                  print("     Flags : " + self.Sectionheadertable.sectiontable[i].flags)
+                  print("     Addr : " + self.Sectionheadertable.sectiontable[i].addr)
+                  print("     Offset : " + self.Sectionheadertable.sectiontable[i].offset)
+                  print("     Size : " + self.Sectionheadertable.sectiontable[i].size)
+                  print("     Link : " + self.Sectionheadertable.sectiontable[i].link)
+                  print("     Info : " + self.Sectionheadertable.sectiontable[i].info)
+                  print("     AddrAlign : " + self.Sectionheadertable.sectiontable[i].addralign)
+                  print("     EntSize : " + self.Sectionheadertable.sectiontable[i].entsize)
 
       def ToHex(self):
             '''
@@ -352,7 +349,7 @@ class ELF:
             content = ""
             content += self.Elfheader.ToHex()
             content += self.Programheadertable.ToHex()
-            content += self.Dummy.ToHex()
+            content += self.Dummy.ToHex() 
             content += self.Sectionheadertable.ToHex()
             return content
 
@@ -370,7 +367,10 @@ def Extract(content: str):
 
             ExtractDummy(content, Elf, index)
 
-            index = int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2
+            print("index avant",index)
+            index = int(Elf.Elfheader.offset_sectionsheader, 16)*2
+            print("index apres",index)
+            
             index = ExtractSectionHeaderTable(content, Elf, index)
             return Elf
       else:
@@ -435,7 +435,6 @@ def ExtractELFHeader(content: str, Elf: ELF, index: int):
       LibDebug.Log("SUCCESS", "End of the ELF Header extraction.")
       return index
 
-
 def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
       '''
       Extract the PROGRAM header from a content and add it to a LibElfAnnalyzer.ELF class.
@@ -485,7 +484,8 @@ def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
       -return: int
       '''
       LibDebug.Log("WORK", "Extracting SECTION Header Table.")
-      for i in range(0, int(LibByteEditor.RevertBytes(Elf.Elfheader.entrynumber_sectionheader), 16)):
+
+      for i in range(0, int(Elf.Elfheader.entrynumber_sectionheader, 16)):
             Elf.Sectionheadertable.sectiontable.append(SECTIONHEADER())
             Elf.Sectionheadertable.sectiontable[i].name = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_name])
             index += Elf.Sectionheadertable.sectiontable[i].sizeof_name
