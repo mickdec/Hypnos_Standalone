@@ -19,8 +19,9 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     '''
    
     #Elf.Elfheader.entrynumber_programheader = LibDebug.AdaptStringToHex(str(hex(int(Elf.Elfheader.entrynumber_programheader, 16) + 1))[2:], Elf.Elfheader.sizeof_entrynumber_programheader)
-    #Elf.Elfheader.entrynumber_sectionheader = LibDebug.AdaptStringToHex(str(hex(int(Elf.Elfheader.entrynumber_sectionheader, 16) + 1))[2:], Elf.Elfheader.sizeof_entrynumber_sectionheader)
+    Elf.Elfheader.entrynumber_sectionheader = LibDebug.AdaptStringToHex(str(hex(int(Elf.Elfheader.entrynumber_sectionheader, 16) + 1))[2:], Elf.Elfheader.sizeof_entrynumber_sectionheader)
     
+
     content = ""
     content += Elf.Elfheader.ToHex()
     content += Elf.Programheadertable.ToHex()

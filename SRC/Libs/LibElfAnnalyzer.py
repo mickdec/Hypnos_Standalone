@@ -489,7 +489,7 @@ def ExtractDummy(content: str, Elf: ELF, index: int):
       Extract the data part of a Elf binnary.
       -return: LibElfAnnalyzer.ELF
       '''
-      Elf.Dummy.data = LibByteEditor.RevertBytes(content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2])
+      Elf.Dummy.data = LibByteEditor.RevertBytes(content[index:int(Elf.Elfheader.offset_sectionsheader, 16)*2])
       index += len(Elf.Dummy.data)
       return index
       
@@ -499,7 +499,6 @@ def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
       -return: int
       '''
       LibDebug.Log("WORK", "Extracting SECTION Header Table.")
-
       for i in range(0, int(Elf.Elfheader.entrynumber_sectionheader, 16)):
             Elf.Sectionheadertable.sectiontable.append(SECTIONHEADER())
             Elf.Sectionheadertable.sectiontable[i].name = LibByteEditor.RevertBytes(content[index:index + Elf.Sectionheadertable.sectiontable[i].sizeof_name])
