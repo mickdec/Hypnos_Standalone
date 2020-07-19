@@ -22,7 +22,7 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
 
-    LibElfEditor.AddSection(ElfInput, ".mew", shellcode)
+    LibElfEditor.AddSection(ElfInput, ".mew", "0")
     ElfInput.PrintElfHeader()
     exit()
 
@@ -98,7 +98,7 @@ def menu():
     else:
         LibDebug.Log("ERROR", "Bad entry. Exiting.")
         exit()
-        
+
     #  ANCIENNE GENERATION AVEC NASM
     #   shellcodes = []
     #   for (dirpath, _, filenames) in os.walk("ASM/ShellCodes"):
@@ -178,4 +178,4 @@ def menu():
         LibDebug.Log("ERROR", "Bad entry. Exiting.")
         exit()
 
-menu())
+menu()

@@ -173,8 +173,7 @@ class DUMMY:
       -string ToHex(self)
       '''
       def __init__(self):
-            self.dummyindex = 0
-            self.dum01 = ""
+            self.data = ""
             
       def ToHex(self):
             '''
@@ -182,7 +181,7 @@ class DUMMY:
             -return: string
             '''
             content = ""
-            content += self.dum01
+            content += self.data
             return content
 
 class SECTIONHEADER:
@@ -279,8 +278,8 @@ class ELF:
       def __init__(self):
             self.Elfheader = ELFHEADER()
             self.Programheadertable = PROGRAMHEADERTABLE()
-            self.Sectionheadertable = SECTIONHEADERTABLE()
             self.Dummy = DUMMY()
+            self.Sectionheadertable = SECTIONHEADERTABLE()
 
       def PrintELF(self):
             '''
@@ -377,13 +376,7 @@ def Extract(content: str):
             index = 0
             index = ExtractELFHeader(content, Elf, index)
             index = ExtractProgramHeaderTable(content, Elf, index)
-
-            ExtractDummy(content, Elf, index)
-
-            print("index avant",index)
-            index = int(Elf.Elfheader.offset_sectionsheader, 16)*2
-            print("index apres",index)
-            
+            index = ExtractDummy(content, Elf, index)
             index = ExtractSectionHeaderTable(content, Elf, index)
             return Elf
       else:
@@ -491,6 +484,15 @@ def ExtractProgramHeaderTable(content: str, Elf: ELF, index: int):
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
 
+def ExtractDummy(content: str, Elf: ELF, index: int):
+      '''
+      Extract the data part of a Elf binnary.
+      -return: LibElfAnnalyzer.ELF
+      '''
+      Elf.Dummy.data = LibByteEditor.RevertBytes(content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2])
+      index += len(Elf.Dummy.data)
+      return index
+      
 def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
       '''
       Extract the SECTION header table from a content and add it to a LibElfAnnalyzer.ELF class.
@@ -540,11 +542,3 @@ def ExtractSectionHeaderTable(content: str, Elf: ELF, index: int):
                   index += Elf.Sectionheadertable.sectiontable[i].x32_sizeof_entsize
       LibDebug.Log("SUCCESS", "End of the PROGRAM Header extraction.")
       return index
-
-def ExtractDummy(content: str, Elf: ELF, index: int):
-      '''
-      Extract the data part of a Elf binnary.
-      -return: LibElfAnnalyzer.ELF
-      '''
-      Elf.Dummy.dummyindex = index
-      Elf.Dummy.dum01 = LibByteEditor.RevertBytes(content[index:int(LibByteEditor.RevertBytes(Elf.Elfheader.offset_sectionsheader), 16)*2])
