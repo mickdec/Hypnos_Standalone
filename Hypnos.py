@@ -17,11 +17,11 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    inputfile = "test.micka"
+    inputfile = "test.out"
     outputfile = "ELFx64_EDITED_printf.out"
 
     LibObjCopy.test()
-    
+
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
     # LibElfEditor.AddSection(ElfInput, ".mew", "0000")
