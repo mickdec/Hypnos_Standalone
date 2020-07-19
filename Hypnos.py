@@ -22,7 +22,7 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
 
-    LibElfEditor.AddSection(ElfInput, ".mew", "0")
+    LibElfEditor.AddSection(ElfInput, ".mew", "0000")
     ElfInput.PrintElfHeader()
     exit()
 
@@ -152,8 +152,9 @@ def menu():
     LibDebug.Log("WORK", "Generating new section..")
     LibPeEditor.AddSection(PeInput, ".mew", shellcode)
     LibDebug.Log("WORK", "Calculating new EntryPoint..")
-    LibPeEditor.ModifyEntryPoint(PeInput, PeInput.SectionTable.sections[int(
-        PeInput.Coffheader.numberofsections, 16)-1].virtualaddress)
+
+    LibPeEditor.ModifyEntryPoint(PeInput, PeInput.SectionTable.sections[int(PeInput.Coffheader.numberofsections, 16)-1].virtualaddress)
+
     LibDebug.Log("WORK", "Generating edited executable..")
     LibByteEditor.CreateBinFromClass(outputfile, PeInput)
     print("Did you want to verify the new executable ? [y/n] : ", end="")

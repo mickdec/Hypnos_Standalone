@@ -23,42 +23,36 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     
 
     content = ""
-    content += Elf.Elfheader.ToHex()
-    content += Elf.Programheadertable.ToHex()
-    content += Elf.Dummy.ToHex()
-    content += Elf.Sectionheadertable.ToHex()
 
-    print("Size of elfheader : ", hex(int(len(Elf.Elfheader.ToHex())/2)))
-    print("Size of programheadertable : ", hex(int(len(Elf.Programheadertable.ToHex())/2)))
+    if Elf.Elfheader.struct == "01":
+        Elf.Elfheader.entrypoint =  LibDebug.AdaptStringToHex(str(hex(int((int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].offset,16) + int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].size,16)))))[2:], Elf.Elfheader.x32_sizeof_entrypoint)
+        Elf.Elfheader.offset_sectionsheader = LibDebug.AdaptStringToHex(str(hex(int(int(int(Elf.Elfheader.entrypoint,16)*2 + int(len(rawdata)))/2)))[2:], Elf.Elfheader.x32_sizeof_offset_sectionsheader)
+    elif Elf.Elfheader.struct == "02":
+        Elf.Elfheader.entrypoint =  LibDebug.AdaptStringToHex(str(hex(int((int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].offset,16) + int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].size,16)))))[2:], Elf.Elfheader.x64_sizeof_entrypoint)
+        Elf.Elfheader.offset_sectionsheader = LibDebug.AdaptStringToHex(str(hex(int(int(int(Elf.Elfheader.entrypoint,16)*2 + int(len(rawdata)))/2)))[2:], Elf.Elfheader.x64_sizeof_offset_sectionsheader)
 
-    print(Elf.Elfheader.elfheadersize)
-
-    LibByteEditor.CreateBinFromHex("ELFx64_EDITED_printf.out", content)
-    exit()
-
-
-def addSectionToHeaderTable(Elf, sectionname: str, addr: str, size: str):
-    print("======")
-    print(Elf.Sectionheadertable.sectiontable[28].Print())
-    print("======")
-    print("addr : " + addr)
-    exit()
     section = LibElfAnnalyzer.SECTIONHEADER()
-    section.name = "00000011"
+    section.name = "0000009"
     section.type = "00000003"
     section.flags = "0000000000000004"
     section.addr = "0000000000000000"
-    section.offset = addr
-    section.size = size
+    section.offset = Elf.Elfheader.entrypoint
+
+    if Elf.Elfheader.struct == "01":
+        section.size = LibDebug.AdaptStringToHex(hex(int(len(rawdata)/2))[2:], 4*2)
+    elif Elf.Elfheader.struct == "02":
+        section.size = LibDebug.AdaptStringToHex(hex(int(len(rawdata)/2))[2:], 4*2)
+
     section.link = "00000000"
     section.info = "00000000"
     section.addralign = "0000000000000001"
     section.entsize = "0000000000000000"
-    return section.ToHex()
 
+    content += Elf.Elfheader.ToHex()
+    content += Elf.Programheadertable.ToHex()
+    content += Elf.Dummy.ToHex()
+    content += section.ToHex()
+    content += Elf.Sectionheadertable.ToHex()
 
-def ModifyEntryPoint(Elf, entrypoint: str):
-    '''
-    Edit the entrypoint (e_entry) of a ELF
-    return: void
-    '''
+    LibByteEditor.CreateBinFromHex("ELFx64_EDITED_printf.out", content)
+    exit()
