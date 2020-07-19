@@ -36,6 +36,8 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     index = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].offset,16)/2)
     index2 = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].size,16)/2)
 
+    
+
     lastsectionindex = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-3].name,16)/2)
     print(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-4].name)
 
@@ -79,4 +81,10 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     content += Elf.Sectionheadertable.ToHex()
 
     LibByteEditor.CreateBinFromHex("ELFx64_EDITED_printf.out", content)
+
+    Elf.PrintSectionHeaderTable()
+    HexContent = LibByteEditor.GetHexFromFile("ELFx64_EDITED_printf.out")
+    ElfInput = LibElfAnnalyzer.Extract(HexContent)
+    ElfInput.PrintSectionHeaderTable()
+
     exit()

@@ -12,17 +12,29 @@ from SRC.Libs import LibShellcode
 from SRC.Libs import LibPeEditor
 from SRC.Libs import LibElfEditor
 
+import difflib
+
 Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    inputfile = "a.micka"
+    inputfile = "test.micka"
     outputfile = "ELFx64_EDITED_printf.out"
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
-    LibElfEditor.AddSection(ElfInput, ".mew", "0000")
-    ElfInput.PrintElfHeader()
-    ElfInput.PrintSectionHeaderTable
+    # LibElfEditor.AddSection(ElfInput, ".mew", "0000")
+    LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
+    HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
+
+    if HexContent != HexContent2:
+        print("shit")
+    #     for i,s in enumerate(difflib.ndiff(HexContent, HexContent2)):
+    #         if s[0]==' ': continue
+    #         elif s[0]=='-':
+    #             print(u'Delete "{}" from position {}'.format(s[-1],i))
+    #         elif s[0]=='+':
+    #             print(u'Add "{}" to position {}'.format(s[-1],i))    
+    #     print()    
     exit()
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
