@@ -28,14 +28,14 @@ def menu():
 
     ElfInput.Programheadertable.headertable[5].filesz = "0000000000000500"
     ElfInput.Programheadertable.headertable[5].memsz = "0000000000000500"
-    ElfInput.Programheadertable.headertable[5].align = "0000000000002000"
-    ElfInput.Programheadertable.headertable[5].align = "0000000000002000"
-    ElfInput.Programheadertable.headertable[5].offset = "0000000000001500"
+    ElfInput.Programheadertable.headertable[5].offset = "000000000000304d"
     ElfInput.PrintProgramHeaderTable()
 
     print(ElfInput.Elfheader.entrypoint)
     ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
     print(ElfInput.Elfheader.entrypoint)
+
+    ElfInput.Programheadertable.headertable[27].flags = "0000000000000006"
 
     LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
     
