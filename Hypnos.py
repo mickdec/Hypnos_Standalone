@@ -35,7 +35,7 @@ def menu():
     ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
     print(ElfInput.Elfheader.entrypoint)
 
-    ElfInput.Sectionheadertable.sectiontable[27].adress = "000000000000304d"
+    ElfInput.Sectionheadertable.sectiontable[27].link = "000000000000304d"
     ElfInput.Sectionheadertable.sectiontable[27].flags = "0000000000000006"
 
     LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
