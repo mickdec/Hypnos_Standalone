@@ -25,7 +25,13 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
     # LibElfEditor.AddSection(ElfInput, ".mew", "0000")
+
+    print(ElfInput.Elfheader.entrypoint)
     ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
+
+    print(ElfInput.Sectionheadertable.sectiontable[27].offset)
+    exit()
+
     LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
     
     HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
