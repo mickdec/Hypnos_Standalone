@@ -17,35 +17,35 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    inputfile = "test.out"
-    outputfile = "ELFx64_EDITED_printf.out"
+    # inputfile = "test.out"
+    # outputfile = "ELFx64_EDITED_printf.out"
 
-    LibObjCopy.test()
+    # LibObjCopy.test()
 
-    HexContent = LibByteEditor.GetHexFromFile(inputfile)
-    ElfInput = LibElfAnnalyzer.Extract(HexContent)
+    # HexContent = LibByteEditor.GetHexFromFile(inputfile)
+    # ElfInput = LibElfAnnalyzer.Extract(HexContent)
 
 
-    ElfInput.Programheadertable.headertable[5].filesz = "0000000000000500"
-    ElfInput.Programheadertable.headertable[5].memsz = "0000000000000500"
-    ElfInput.Programheadertable.headertable[5].offset = "000000000000304d"
-    ElfInput.PrintSectionHeaderTable()
+    # ElfInput.Programheadertable.headertable[3].filesz = "0000000000003500"
+    # ElfInput.Programheadertable.headertable[3].memsz = "0000000000003500"
+    # # ElfInput.Programheadertable.headertable[5].offset = "000000000000304d"
+    # # ElfInput.Programheadertable.headertable[5].vaddr = "000000000000304d"
+    # # ElfInput.Programheadertable.headertable[5].paddr = "000000000000304d"
 
-    print(ElfInput.Elfheader.entrypoint)
-    ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
-    print(ElfInput.Elfheader.entrypoint)
+    # print(ElfInput.Elfheader.entrypoint)
+    # ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
+    # print(ElfInput.Elfheader.entrypoint)
 
-    ElfInput.Sectionheadertable.sectiontable[27].addr = "000000000000304d"
-    ElfInput.Sectionheadertable.sectiontable[27].flags = "0000000000000006"
-
-    LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
+    # ElfInput.Sectionheadertable.sectiontable[27].flags = "0000000000000006"
+    # ElfInput.PrintProgramHeaderTable()
+    # LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
     
-    HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
+    # HexContent2 = LibByteEditor.GetHexFromFile(outputfile)
 
-    if HexContent != HexContent2:
-        print("shit")
+    # if HexContent != HexContent2:
+    #     print("shit")
 
-    exit()
+    # exit()
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
     print(

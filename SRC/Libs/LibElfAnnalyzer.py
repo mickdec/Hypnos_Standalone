@@ -6,6 +6,8 @@ Library made for analyzing ELF file.
       -string ToHex(self)
 -class PROGRAMHEADERTABLE
       -string ToHex(self)
+-class DUMMY
+      -string ToHex(self)
 -class SECTIONHEADER
       -string ToHex(self)
 -class SECTIONHEADERTABLE
@@ -19,6 +21,7 @@ Library made for analyzing ELF file.
 -LibPeAnnalyzer.ELF Extract(content: str)
 -int ExtractELFHeader(content: str, Elf: ELF, index: int)
 -int ExtractProgramHeaderTable(content: str, Elf: ELF, index: int)
+-int ExtractDummy(content: str, Elf: ELF, index: int)
 -int ExtractSectionHeaderTable(content: str, Elf: ELF, index: int)
 '''
 from SRC.Libs import LibDebug

@@ -1,7 +1,6 @@
 '''
 Library made for editing the values of a ELF class.
 -void AddSection(Elf, sectionname: str, rawdata: str)
--void ModifyEntryPoint(Elf, entrypoint: str)
 '''
 from SRC.Core import Globals
 from SRC.Libs import LibDebug
