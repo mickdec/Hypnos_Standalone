@@ -28,9 +28,7 @@ def menu():
 
     print(ElfInput.Elfheader.entrypoint)
     ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
-
-    print(ElfInput.Sectionheadertable.sectiontable[27].offset)
-    exit()
+    print(ElfInput.Elfheader.entrypoint)
 
     LibByteEditor.CreateBinFromClass(outputfile,ElfInput)
     
