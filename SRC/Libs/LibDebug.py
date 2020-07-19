@@ -677,16 +677,78 @@ def CompareElf(Elf1: LibElfAnnalyzer.ELF, Elf2: LibElfAnnalyzer.ELF):
                   print("entrynumber_sectionheader Elf2 : " + LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_sectionheader))
             if Elf2.Elfheader.sectionnames_sectiontable_index != Elf1.Elfheader.sectionnames_sectiontable_index:
                   print("sectionnames_sectiontable_index Elf1 : " + LibByteEditor.RevertBytes(Elf1.Elfheader.sectionnames_sectiontable_index),end=' ')
-                  print("sectionnames_sectiontable_index Elf2 : " + LibByteEditor.RevertBytes(Elf2.Elfheader.sectionnames_sectiontable_index))
+                  print("sectionnames_sectiontable_index Elf2 : " + LibByteEditor.RevertBytes(Elf2.Elfheader.sectionnames_sectiontable_index))   
       if Elf1.Programheadertable.ToHex() != Elf2.Programheadertable.ToHex():
             max=len(Elf2.Programheadertable.headertable)
             if len(Elf2.Programheadertable.headertable) > int(LibByteEditor.RevertBytes(Elf1.Elfheader.entrynumber_programheader), 16) :
                   max=int(LibByteEditor.RevertBytes(Elf1.Elfheader.entrynumber_programheader), 16)
             if len(Elf2.Programheadertable.headertable) != int(LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_programheader), 16) :
                   print("Number of section isn't the same ! Elf2 has",len(Elf2.Programheadertable.headertable),"section and the elf1 has",len(Elf1.Programheadertable.headertable),"sections")
-            #for i in range(0, max):
-            #      if Elf2.Programheadertable.headertable[i].ToHex() != Elf1.Programheadertable.headertable[i].ToHex():
-            #            if Elf2.Programheadertable.headertable[i].type != Elf1.Programheadertable.headertable[i].type:
-            #                  print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].type),end=' ')
-            #                  print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].type))
- 
+      
+            for i in range(0, max):
+                  if Elf2.Programheadertable.headertable[i].ToHex() != Elf1.Programheadertable.headertable[i].ToHex():
+                        if Elf2.Programheadertable.headertable[i].type != Elf1.Programheadertable.headertable[i].type:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].type),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].type))
+                        if Elf2.Programheadertable.headertable[i].flags != Elf2.Programheadertable.headertable[i].flags:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].flags),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].flags))
+                        if Elf2.Programheadertable.headertable[i].offset != Elf2.Programheadertable.headertable[i].offset:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].offset),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].offset))
+                        if Elf2.Programheadertable.headertable[i].vaddr != Elf2.Programheadertable.headertable[i].vaddr:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].vaddr),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].vaddr))
+                        if Elf2.Programheadertable.headertable[i].paddr != Elf2.Programheadertable.headertable[i].paddr:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].paddr),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].paddr))
+                        if Elf2.Programheadertable.headertable[i].filesz != Elf2.Programheadertable.headertable[i].filesz:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].filesz),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].filesz))
+                        if Elf2.Programheadertable.headertable[i].memsz != Elf2.Programheadertable.headertable[i].memsz:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].memsz),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].memsz))
+                        if Elf2.Programheadertable.headertable[i].align != Elf2.Programheadertable.headertable[i].align:
+                              print("headertable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Programheadertable.headertable[i].align),end=' ')
+                              print("headertable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Programheadertable.headertable[i].align))    
+      if Elf2.Dummy.ToHex() != Elf1.Dummy.ToHex():
+          print("The dummy aren't the same")
+      if Elf1.Sectionheadertable.ToHex() != Elf2.Sectionheadertable.ToHex():
+            max=len(Elf2.Sectionheadertable.sectiontable)
+            if len(Elf2.Sectionheadertable.sectiontable) > int(LibByteEditor.RevertBytes(Elf1.Elfheader.entrynumber_sectionheader), 16) :
+                  max=int(LibByteEditor.RevertBytes(Elf1.Elfheader.entrynumber_sectionheader), 16)
+            if len(Elf2.Sectionheadertable.sectiontable) != int(LibByteEditor.RevertBytes(Elf2.Elfheader.entrynumber_sectionheader), 16) :
+                  print("Number of section isn't the same ! Elf2 has",len(Elf2.Sectionheadertable.sectiontable),"section and the elf1 has",len(Elf1.Programheadertable.sectiontable),"sections")
+
+            for i in range(0,max):
+                  if Elf2.Sectionheadertable.sectiontable[i].ToHex() != Elf1.Sectionheadertable.sectiontable[i].ToHex():
+                        if Elf2.Sectionheadertable.sectiontable[i].name != Elf1.Sectionheadertable.sectiontable[i].name:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].name),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].name))
+                        if Elf2.Sectionheadertable.sectiontable[i].type != Elf2.Sectionheadertable.headertable[i].type:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].type),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].type))
+                        if Elf2.Sectionheadertable.sectiontable[i].flags != Elf2.Sectionheadertable.headertable[i].flags:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].flags),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].flags))
+                        if Elf2.Sectionheadertable.sectiontable[i].addr != Elf2.Sectionheadertable.headertable[i].addr:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].addr),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].addr))
+                        if Elf2.Sectionheadertable.sectiontable[i].offset != Elf2.Sectionheadertable.headertable[i].offset:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].offset),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].offset))
+                        if Elf2.Sectionheadertable.sectiontable[i].size != Elf2.Sectionheadertable.headertable[i].size:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].size),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].size))
+                        if Elf2.Sectionheadertable.sectiontable[i].link != Elf2.Sectionheadertable.headertable[i].link:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].link),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].link))
+                        if Elf2.Sectionheadertable.sectiontable[i].info != Elf2.Sectionheadertable.headertable[i].info:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].info),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].info))
+                        if Elf2.Sectionheadertable.sectiontable[i].addralign != Elf2.Sectionheadertable.headertable[i].addralign:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].addralign),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].addralign))
+                        if Elf2.Sectionheadertable.sectiontable[i].entsize != Elf2.Sectionheadertable.headertable[i].entsize:
+                              print("sectiontable[",i,"] Elf1 : " + LibByteEditor.RevertBytes(Elf1.Sectionheadertable.sectiontable[i].entsize),end=' ')
+                              print("sectiontable[",i,"] Elf2 : " + LibByteEditor.RevertBytes(Elf2.Sectionheadertable.sectiontable[i].entsize))
