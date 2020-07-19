@@ -25,6 +25,11 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
 
+
+    ElfInput.Programheadertable.headertable[5].filesz = "0000000000000500"
+    ElfInput.Programheadertable.headertable[5].memsz = "0000000000000500"
+    ElfInput.PrintProgramHeaderTable()
+
     print(ElfInput.Elfheader.entrypoint)
     ElfInput.Elfheader.entrypoint = ElfInput.Sectionheadertable.sectiontable[27].offset
     print(ElfInput.Elfheader.entrypoint)
