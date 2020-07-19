@@ -29,6 +29,8 @@ def menu():
     ElfInput.Programheadertable.headertable[5].filesz = "0000000000000500"
     ElfInput.Programheadertable.headertable[5].memsz = "0000000000000500"
     ElfInput.Programheadertable.headertable[5].align = "0000000000002000"
+    ElfInput.Programheadertable.headertable[5].align = "0000000000002000"
+    ElfInput.Programheadertable.headertable[5].offset = "0000000000001500"
     ElfInput.PrintProgramHeaderTable()
 
     print(ElfInput.Elfheader.entrypoint)
