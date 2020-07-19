@@ -32,9 +32,30 @@ def AddSection(Elf, sectionname: str, rawdata: str):
         Elf.Elfheader.offset_sectionsheader = LibDebug.AdaptStringToHex(str(hex(int(int(int(Elf.Elfheader.entrypoint,16)*2 + int(len(rawdata)))/2)))[2:], Elf.Elfheader.x64_sizeof_offset_sectionsheader)
 
 
+    print(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].offset,16))
+    index = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].offset,16)/2)
+    index2 = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-2].size,16)/2)
+
+    lastsectionindex = int(int(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-3].name,16)/2)
+    print(Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-4].name)
+
+    namtable = ""
+    namtable += Elf.ToHex()[index:index+lastsectionindex]
+    namtable += "002E76616C"
+    namtable += Elf.ToHex()[index+lastsectionindex:index+index2]
+
+
     section = LibElfAnnalyzer.SECTIONHEADER()
-    section.name = "00000009"
-    section.type = "00000003"
+    section.name = lastsectionindex
+
+    for nm in Elf.Sectionheadertable.sectiontable:
+        name = int(nm.name,16)
+        if name > int(section.name):
+            name += len("002E76616C")
+            nm.name = LibDebug.AdaptStringToHex(str(hex(name))[2:], 4*2)
+        print(nm.name)
+
+    section.type = "00000001"
     section.offset = Elf.Elfheader.entrypoint
 
     if Elf.Elfheader.struct == "01":

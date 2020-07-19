@@ -16,15 +16,14 @@ Env = LibDebug.CheckEnv()
 LibDebug.CheckHypnosReq()
 
 def menu():
-    # inputfile = "EXECUTABLE/ELFx64_NOTEDITED_printf.out"
-    # outputfile = "ELFx64_EDITED_printf.out"
-
-    # HexContent = LibByteEditor.GetHexFromFile(inputfile)
-    # ElfInput = LibElfAnnalyzer.Extract(HexContent)
-
-    # LibElfEditor.AddSection(ElfInput, ".mew", "0000")
-    # ElfInput.PrintElfHeader()
-    # exit()
+    inputfile = "a.micka"
+    outputfile = "ELFx64_EDITED_printf.out"
+    HexContent = LibByteEditor.GetHexFromFile(inputfile)
+    ElfInput = LibElfAnnalyzer.Extract(HexContent)
+    LibElfEditor.AddSection(ElfInput, ".mew", "0000")
+    ElfInput.PrintElfHeader()
+    ElfInput.PrintSectionHeaderTable
+    exit()
 
     outputfile = LibObfuscator.RandomizedString(7) + ".exe"
     print(
