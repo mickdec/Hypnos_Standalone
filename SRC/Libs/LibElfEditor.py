@@ -40,11 +40,11 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     if Elf.Elfheader.struct == "01":
         section.flags = "00000004"
         section.addr = "00000000"
-        section.size = LibDebug.AdaptStringToHex(LibByteEditor.RevertBytes(hex(int(len(rawdata)/2))[2:]), 4*2)
+        section.size = LibDebug.AdaptStringToHex(hex(int(len(rawdata)/2))[2:], 4*2)
     elif Elf.Elfheader.struct == "02":
         section.flags = "0000000000000004"
         section.addr = "0000000000000000"
-        section.size = LibDebug.AdaptStringToHex(LibByteEditor.RevertBytes(hex(int(len(rawdata)/2))[2:]), 8*2)
+        section.size = LibDebug.AdaptStringToHex(hex(int(len(rawdata)/2))[2:], 8*2)
 
     section.link = "00000000"
     section.info = "00000000"
@@ -54,7 +54,7 @@ def AddSection(Elf, sectionname: str, rawdata: str):
     content += Elf.Elfheader.ToHex()
     content += Elf.Programheadertable.ToHex()
     content += Elf.Dummy.ToHex()
-    content += section.ToHex()
+    content += Elf.Sectionheadertable.sectiontable[int(Elf.Elfheader.entrynumber_sectionheader,16)-4].ToHex()
     content += Elf.Sectionheadertable.ToHex()
 
     LibByteEditor.CreateBinFromHex("ELFx64_EDITED_printf.out", content)
