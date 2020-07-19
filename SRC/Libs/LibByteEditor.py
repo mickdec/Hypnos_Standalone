@@ -106,24 +106,6 @@ def CreateBinFromHex(output: str, content: str):
     Create a new EXE with the specified HEX content.
     -return: void
     '''
-
-    if len(content) % 2 != 0:
-        LibDebug.Log("ERROR", "New content isn't a valid HEX string.")
-        exit()
-    else:
-        LibDebug.Log("WORK", "Creating " + output + "..")
-        open(output, "wb").write(bytes.fromhex(content))
-        LibDebug.Log("WORK", "Reading the first bytes..")
-        with open(output, mode='rb') as f:
-            newcontent = f.read().hex()
-        LibDebug.Log("WORK", "Checking the first bytes...")
-        if newcontent[0:100] != content[0:100]:
-            LibDebug.Log(
-                "ERROR", "Content of the new file is not the same as the new content.")
-        else:
-            LibDebug.Log("SUCCESS", "Content seems correct. " +
-                         output + " successfuly created.")
-
     try:
         if len(content) % 2 != 0:
             LibDebug.Log("ERROR", "New content isn't a valid HEX string.")

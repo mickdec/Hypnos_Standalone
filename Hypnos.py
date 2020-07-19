@@ -25,11 +25,13 @@ def menu():
     HexContent = LibByteEditor.GetHexFromFile(inputfile)
     ElfInput = LibElfAnnalyzer.Extract(HexContent)
 
-    open("HEXCONTENT.x", "w").write(HexContent)
+    # open("HEXCONTENT.x", "w").write(HexContent)
     with open("HEXCONTENT.x", mode='r') as f:
         HexContent = f.read()
 
-    HexContent.replace("554889E5488D3DA90E0000E8D5FFFFFFB8000000005DC3660F1F84000000","4831d248bb2f2f62696e2f736848c1eb08534889e750574889e6b03b0f05")
+    # if "554889E5488D3DA90E0000E8D5FFFFFFB8000000005DC3660F1F84000000" in HexContent:
+    #     print("yes")
+    #     HexContent.replace("554889E5488D3DA90E0000E8D5FFFFFFB8000000005DC3660F1F84000000","4831d248bb2f2f62696e2f736848c1eb08534889e750574889e6b03b0f05")
 
     LibByteEditor.CreateBinFromHex(outputfile,HexContent)
     
